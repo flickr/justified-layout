@@ -1,0 +1,31 @@
+{
+  "name": "justified-layout",
+  "version": "0.0.1",
+  "description": "Pass in box sizes and get back sizes and coordinates for a justified layout",
+  "keywords": [
+    "justify",
+    "grid",
+    "photos",
+    "layout",
+    "boxes"
+  ],
+  "bugs": {
+    "url": "https://github.com/flickr/justified-layout/issues",
+    "email": "whimpey@yahoo-inc.com"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "./script/test.sh",
+    "build": "./script/build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:flickr/justified-layout.git",
+  },
+  "author": "Jim Whimpey <whimpey@yahoo-inc.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "~11.1.0"
+  },
+  "dependencies": {}
+}
