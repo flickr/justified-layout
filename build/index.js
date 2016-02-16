@@ -1,6 +1,9 @@
+'use strict';
+
 var merge = require('merge');
 
-module.exports = function(input, config = {}) {
+module.exports = function (input) {
+	var config = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
 	// Defaults
 	var defaults = {
@@ -19,5 +22,4 @@ module.exports = function(input, config = {}) {
 	var config = merge(config, defaults);
 
 	return [];
-
 };

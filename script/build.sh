@@ -1,0 +1,1 @@
+babel index.js -o build/index.js
