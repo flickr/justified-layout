@@ -1,4 +1,4 @@
-var justifiedLayout = require('../build/index.js');
+var justifiedLayout = require('../lib/index');
 var expect = require('expect');
 
 describe('justified-layout', function() {
