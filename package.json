@@ -16,7 +16,8 @@
   "main": "index.js",
   "scripts": {
     "test": "./script/test.sh",
-    "build": "./script/build.sh"
+    "build": "./script/build.sh",
+    "watch": "./script/watch.sh"
   },
   "repository": {
     "type": "git",
