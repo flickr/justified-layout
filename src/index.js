@@ -1,8 +1,17 @@
 var merge = require('merge'),
     Row = require('./row'),
     layoutConfig = {},
+    layoutData = {},
     currentRow = false;
 
+/**
+* Takes in a bunch of box data and config. Returns
+* geometry to lay them out in a justified view.
+*
+* @method covertSizesToAspectRatios
+* @param sizes {Array} Array of objects with widths and heights
+* @return {Array} A list of aspect ratios
+**/
 module.exports = function(input, config = {}) {
 
 	// Defaults
@@ -21,22 +30,24 @@ module.exports = function(input, config = {}) {
 	// Merge defaults and config passed in
 	layoutConfig = merge(config, defaults);
 
-	computeLayout([1]);
+	// Local
+	layoutData._layoutItems = [];
+	layoutData._awakeItems = [];
+	layoutData._inViewportItems = [];
+	layoutData._leadingOrphans = [];
+	layoutData._trailingOrphans = [];
+	layoutData._containerHeight = layoutConfig.containerPadding.top || layoutConfig.containerPadding;
+	layoutData._rows = [];
+	layoutData._orphans = [];
 
-	return [];
+	// Convert widths and heights to aspect ratios if we need to
+	return computeLayout(input.map(function (item) {
+		return {
+			aspectRatio: (item.width && item.height) ? (item.width / item.height) : item;
+		};
+	}));
 
 };
-
-/**
-* Convert sizes to aspect ratios
-*
-* @method covertSizesToAspectRatios
-* @param sizes {Array} Array of objects with widths and heights
-* @return {Array} A list of aspect ratios
-**/
-function covertSizesToAspectRatios(sizes) {
-	return sizes;
-}
 
 
 /**
@@ -45,22 +56,111 @@ function covertSizesToAspectRatios(sizes) {
 *
 * @method computeLayout
 * @param itemLayoutData {Array} Array of items to lay out, with data required to lay out each item
-* @param containerTop {Number} The top edge of the container, relative to the parent container or viewport.
-* @param containerLeft {Object} The left edge of the container, relative to the parent container or viewport.
 * @return {Object} The newly-calculated layout, containing the new container height, and lists of layout items
 */
-function computeLayout(itemLayoutData, containerTop, containerLeft) {
+function computeLayout(itemLayoutData) {
+
+	var notAddedNotComplete,
+	    laidOutItems = [],
+	    itemAdded,
+	    currentRow;
 
 	// Loop through the items
 	itemLayoutData.some(function (itemData, i) {
 
+		notAddedNotComplete = false;
+
 		// If not currently building up a row, make a new one.
 		if (!currentRow) {
-			currentRow = new Row();
+			currentRow = createNewRow();
+		}
+
+		// Attempt to add item to the current row.
+		itemAdded = currentRow.addItem(itemData);
+
+		if (currentRow.isLayoutComplete()) {
+
+			// Row is filled; add it and start a new one
+			laidOutItems = laidOutItems.concat(addRow(currentRow));
+			if (layoutData._rows.length >= layoutConfig.maxNumRows) {
+				currentRow = null;
+				return true;
+			}
+
+			currentRow = createNewRow();
+
+			// Item was rejected; add it to its own row
+			if (!itemAdded) {
+
+				itemAdded = currentRow.addItem(itemData);
+
+				if (currentRow.isLayoutComplete()) {
+
+					// If the rejected item fills a row on its own, add the row and start another new one
+					laidOutItems = laidOutItems.concat(addRow(currentRow));
+					if (scope._rows.length >= scope.maxNumRows) {
+						currentRow = null;
+						return true;
+					}
+					currentRow = createNewRow();
+
+				} else if (!itemAdded) {
+					notAddedNotComplete = true;
+				}
+			}
+		} else {
+
+			if (!itemAdded) {
+				notAddedNotComplete = true;
+			}
+
 		}
 
 	});
 
-	return [];
+	return layoutData._layoutItems;
+}
+
+
+/**
+* Create a new, empty row.
+*
+* @method createNewRow
+* @return A new, empty row of the type specified by this layout.
+*/
+function createNewRow() {
+
+	return new Row({
+		top: layoutData._containerHeight,
+		left: layoutConfig.containerPadding.left || layoutConfig.containerPadding,
+		width: layoutConfig.containerWidth - (layoutConfig.containerPadding.left || layoutConfig.containerPadding) - (layoutConfig.containerPadding.right || layoutConfig.containerPadding),
+		spacing: layoutConfig.boxSpacing.horizontal || layoutConfig.boxSpacing,
+		targetRowHeight: layoutConfig.targetRowHeight,
+		targetRowHeightTolerance: layoutConfig.targetRowHeightTolerance,
+		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
+		edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
+		rightToLeft: false,
+		isBreakoutRow: false
+	});
+
+}
+
+/**
+ * Add a completed row to the layout.
+ * Note: the row must have already been completed.
+ *
+ * @method addRow
+ * @param row {Row} The row to add.
+ * @return {Array} Each item added to the row.
+ */
+function addRow(row) {
+
+	layoutData._rows.push(row);
+	layoutData._layoutItems = layoutData._layoutItems.concat(row.getItems());
+
+	// Increment the container height
+	layoutData._containerHeight += (row.height + (layoutConfig.boxSpacing.vertical || layoutConfig.boxSpacing));
+
+	return row.items;
 
 }
