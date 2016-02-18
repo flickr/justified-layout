@@ -2,6 +2,36 @@
 
 Pass in box sizes and get back sizes and coordinates for a justified layout.
 
+Converts this: `[0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1]`
+
+Into this:
+
+```json
+{
+    "containerHeight": 1269,
+    "boxes": [
+        {
+            "aspectRatio": 0.5,
+            "top": 10,
+            "width": 170,
+            "height": 340,
+            "left": 10
+        },
+        {
+            "aspectRatio": 1.5,
+            "top": 10,
+            "width": 510,
+            "height": 340,
+            "left": 190
+        },
+        ...
+    ]
+}
+```
+
+Which you can use to make this:
+
+![Demonstration](https://cloud.githubusercontent.com/assets/43693/13159568/50349cd4-d647-11e5-80a8-14724579302b.png)
 
 ## Install
 
