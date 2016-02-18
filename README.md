@@ -73,7 +73,7 @@ Default: `10`
 The space between boxes in pixels. Can be specified with a single numeric value that applies to both horizontal and vertical spacing or individually like this:
 
 ```js
-itemSpacing: {
+boxSpacing: {
 	horizontal: 12,
 	vertical: 8
 }
