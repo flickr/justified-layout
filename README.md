@@ -161,30 +161,49 @@ Given a very simple input like this (just square images):
 You'd get an output like this:
 
 ```js
-[
-	{
-		width: 252.5,
-		height: 252.5,
-		x: 10,
-		y: 10
-	},
-	{
-		width: 252.5,
-		height: 252.5,
-		x: 272.5,
-		y: 10
-	},
-	{
-		width: 252.5,
-		height: 252.5,
-		x: 535,
-		y: 10
-	},
-	{
-		width: 252.5,
-		height: 252.5,
-		x: 797.5,
-		y: 10
-	}
-]
+{
+	containerHeight: 252.5,
+	boxes: [
+		{
+			aspectRatio: 1,
+			width: 252.5,
+			height: 252.5,
+			left: 10,
+			top: 10
+		},
+		{
+			aspectRatio: 1,
+			width: 252.5,
+			height: 252.5,
+			left: 272.5,
+			top: 10
+		},
+		{
+			aspectRatio: 1,
+			width: 252.5,
+			height: 252.5,
+			left: 535,
+			top: 10
+		},
+		{
+			aspectRatio: 1,
+			width: 252.5,
+			height: 252.5,
+			left: 797.5,
+			top: 10
+		}
+	]
+}
 ```
+
+## TODO
+
+* [ ] Get demos published on the gh-pages branch
+* [ ] Implement right to left stacking
+* [ ] Implement appending
+* [ ] Pull in the better orphan height handling
+* [ ] Add support for the full width breakout row
+* [ ] Get module published on npm
+* [ ] Use the module in Embedr
+* [ ] Full test coverage
+* [ ] Add performance benchmarks
