@@ -23,7 +23,7 @@ module.exports = function(input, config = {}) {
 		targetRowHeightTolerance: 0.25,
 		maxNumRows: Number.POSITIVE_INFINITY,
 		forceAspectRatio: false,
-		alwaysDsiplayOrphans: true,
+		alwaysDisplayOrphans: true,
 		fullWidthBreakoutRowCadence: false
 	};
 
@@ -42,9 +42,11 @@ module.exports = function(input, config = {}) {
 
 	// Convert widths and heights to aspect ratios if we need to
 	return computeLayout(input.map(function (item) {
-		return {
-			aspectRatio: (item.width && item.height) ? (item.width / item.height) : item;
-		};
+		if (item.width && item.width) {
+			return { aspectRatio: item.width/item.height };
+		} else {
+			return { aspectRatio: item };
+		}
 	}));
 
 };

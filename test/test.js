@@ -10,6 +10,7 @@ describe('justified-layout', function() {
 
 		it('should handle an array of aspect ratios as input', function() {
 			justifiedLayout([1, 1, 1, 1]);
+			console.log("justifiedLayout([1, 1, 1, 1]);", justifiedLayout([1, 1, 1, 1]));
 		});
 
 	});

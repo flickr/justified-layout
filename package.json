@@ -27,9 +27,10 @@
   "license": "ISC",
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
+    "browserify": "~11.1.0",
     "expect": "1.14.0",
     "mocha": "2.4.5",
-    "tripod-js-sdk": "*"
+    "uglify": "~0.1.5"
   },
   "dependencies": {
     "merge": "1.2.0"
