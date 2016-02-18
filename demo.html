@@ -8,14 +8,56 @@
 		document.addEventListener('DOMContentLoaded', function() {
 
 			var justifiedLayout = require('justified-layout');
-			console.log(justifiedLayout([1, 1, 1, 1]));
+
+			var demos = [
+				{
+					sizes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+					className: "squares"
+				},
+				{
+					sizes: [0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1],
+					className: "various"
+				},
+			];
+
+			// Loop through the demos and put them in the page
+			demos.forEach(function (demo) {
+
+				var section = document.createElement("section");
+				section.innerHTML = `
+					<h2>Input: <code>[${demo.sizes.join(", ")}]</code></h2>
+					<div class="justified"></div>
+				`;
+				document.body.appendChild(section);
+
+				var boxes = justifiedLayout(demo.sizes).map(function (box) {
+					return  `<div class="box" style="width: ${box.width}px; height: ${box.height}px; top: ${box.top}px; left: ${box.left}px"></div>`;
+				}).join('\n')
+
+				section.innerHTML = boxes;
+
+			});
 
 		}, false);
 
 	</script>
+
+	<style type="text/css" media="screen">
+
+		.justified { position: relative; }
+
+		.box {
+			position: absolute;
+			background: gold;
+		}
+
+	</style>
+
 </head>
 
 <body>
+
+	<h1>justified-layout demo</h1>
 
 </body>
 
