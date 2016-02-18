@@ -11,13 +11,13 @@
 
 			var demos = [
 				{
-					sizes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-					className: "squares"
-				},
-				{
 					sizes: [0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1],
 					className: "various"
 				},
+				{
+					sizes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+					className: "squares"
+				}
 			];
 
 			// Loop through the demos and put them in the page
@@ -30,11 +30,13 @@
 				`;
 				document.body.appendChild(section);
 
-				var boxes = justifiedLayout(demo.sizes).map(function (box) {
+				var geometry = justifiedLayout(demo.sizes);
+				var boxes = geometry.boxes.map(function (box) {
 					return  `<div class="box" style="width: ${box.width}px; height: ${box.height}px; top: ${box.top}px; left: ${box.left}px"></div>`;
 				}).join('\n')
 
-				section.innerHTML = boxes;
+				section.querySelector('.justified').innerHTML = boxes;
+				section.querySelector('.justified').style.height = geometry.containerHeight + "px";
 
 			});
 
@@ -44,11 +46,15 @@
 
 	<style type="text/css" media="screen">
 
-		.justified { position: relative; }
+		.justified {
+			position: relative;
+			background: seagreen;
+			width: 1060px;
+		}
 
 		.box {
 			position: absolute;
-			background: gold;
+			background: yellowgreen;
 		}
 
 	</style>

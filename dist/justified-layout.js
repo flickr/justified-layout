@@ -614,7 +614,10 @@ function computeLayout(itemLayoutData) {
 		laidOutItems = laidOutItems.concat(addRow(currentRow));
 	}
 
-	return layoutData._layoutItems;
+	return {
+		containerHeight: layoutData._containerHeight,
+		boxes: layoutData._layoutItems
+	};
 }
 
 /**
