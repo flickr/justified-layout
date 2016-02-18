@@ -210,6 +210,10 @@ Row.prototype = {
 		// Compute item geometry based on newHeight.
 		this.items.forEach(function (item, i) {
 
+			item.top = self.top;
+			item.width = Math.round(item.aspectRatio * self.height * clampedToNativeRatio);
+			item.height = self.height;
+
 			item.geometry = {
 				'top': self.top,
 				'width': Math.round(item.aspectRatio * self.height * clampedToNativeRatio),
@@ -268,6 +272,35 @@ Row.prototype = {
 					}
 				});
 			}
+		}
+	},
+
+	/**
+ * Force completion of row layout with current items.
+ *
+ * @method forceComplete
+ * @param fitToWidth {Boolean} Stretch current items to fill the row width.
+ *                             This will likely result in padding.
+ * @param fitToWidth {Number}
+ */
+	forceComplete: function forceComplete(fitToWidth, rowHeight) {
+
+		var rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
+		    currentAspectRatio = this.items.reduce(function (sum, item) {
+			return sum + item.aspectRatio;
+		}, 0);
+
+		if (typeof rowHeight === 'number') {
+
+			this.completeLayout(rowHeight, false);
+		} else if (fitToWidth) {
+
+			// Complete using height required to fill row with current items.
+			this.completeLayout(rowWidthWithoutSpacing / currentAspectRatio);
+		} else {
+
+			// Complete using target row height.
+			this.completeLayout(this.targetRowHeight, false);
 		}
 	},
 
@@ -488,7 +521,7 @@ module.exports = function (input) {
 		targetRowHeightTolerance: 0.25,
 		maxNumRows: Number.POSITIVE_INFINITY,
 		forceAspectRatio: false,
-		alwaysDsiplayOrphans: true,
+		alwaysDisplayOrphans: true,
 		fullWidthBreakoutRowCadence: false
 	};
 
@@ -563,7 +596,7 @@ function computeLayout(itemLayoutData) {
 
 					// If the rejected item fills a row on its own, add the row and start another new one
 					laidOutItems = laidOutItems.concat(addRow(currentRow));
-					if (scope._rows.length >= scope.maxNumRows) {
+					if (layoutData._rows.length >= layoutConfig.maxNumRows) {
 						currentRow = null;
 						return true;
 					}
@@ -579,6 +612,13 @@ function computeLayout(itemLayoutData) {
 			}
 		}
 	});
+
+	// Handle any leftover content (orphans) depending on where they lie
+	// in this layout update, and in the total content set.
+	if (currentRow && currentRow.getItems().length && layoutConfig.alwaysDisplayOrphans) {
+		currentRow.forceComplete(false);
+		laidOutItems = laidOutItems.concat(addRow(currentRow));
+	}
 
 	return layoutData._layoutItems;
 }
