@@ -100,7 +100,7 @@ function computeLayout(itemLayoutData) {
 
 					// If the rejected item fills a row on its own, add the row and start another new one
 					laidOutItems = laidOutItems.concat(addRow(currentRow));
-					if (scope._rows.length >= scope.maxNumRows) {
+					if (layoutData._rows.length >= layoutConfig.maxNumRows) {
 						currentRow = null;
 						return true;
 					}
@@ -119,6 +119,13 @@ function computeLayout(itemLayoutData) {
 		}
 
 	});
+
+	// Handle any leftover content (orphans) depending on where they lie
+	// in this layout update, and in the total content set.
+	if (currentRow && currentRow.getItems().length && layoutConfig.alwaysDisplayOrphans) {
+		currentRow.forceComplete(false);
+		laidOutItems = laidOutItems.concat(addRow(currentRow));
+	}
 
 	return layoutData._layoutItems;
 }

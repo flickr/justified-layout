@@ -286,6 +286,38 @@ Row.prototype = {
 	},
 
 	/**
+	* Force completion of row layout with current items.
+	*
+	* @method forceComplete
+	* @param fitToWidth {Boolean} Stretch current items to fill the row width.
+	*                             This will likely result in padding.
+	* @param fitToWidth {Number}
+	*/
+	forceComplete: function (fitToWidth, rowHeight) {
+
+		var rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
+			currentAspectRatio = this.items.reduce(function (sum, item) {
+				return sum + item.aspectRatio;
+			}, 0);
+
+		if (typeof rowHeight === 'number') {
+
+			this.completeLayout(rowHeight, false);
+
+		} else if (fitToWidth) {
+
+			// Complete using height required to fill row with current items.
+			this.completeLayout(rowWidthWithoutSpacing / currentAspectRatio);
+
+		} else {
+
+			// Complete using target row height.
+			this.completeLayout(this.targetRowHeight, false);
+		}
+
+	},
+
+	/**
 	* Return layout data for items within row.
 	* Note: returns actual list, not a copy.
 	*
