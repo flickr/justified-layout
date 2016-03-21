@@ -1,5 +1,7 @@
 # justified-layout
 
+http://flickr.github.io/justified-layout/
+
 Pass in box sizes and get back sizes and coordinates for a justified layout.
 
 Converts this: `[0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1]`
@@ -198,7 +200,7 @@ You'd get an output like this:
 
 ## TODO
 
-* [ ] Get demos published on the gh-pages branch
+* [x] ~~Get demos published on the gh-pages branch~~ http://flickr.github.io/justified-layout/
 * [ ] Implement right to left stacking
 * [ ] Implement appending
 * [ ] Pull in the better orphan height handling
