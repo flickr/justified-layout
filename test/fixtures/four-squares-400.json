@@ -1,0 +1,33 @@
+{
+	"containerHeight": 1570,
+	"boxes": [
+		{
+			"aspectRatio": 1,
+			"top": 10,
+			"width": 380,
+			"height": 380,
+			"left": 10
+		},
+		{
+			"aspectRatio": 1,
+			"height": 380,
+			"left": 10,
+			"top": 400,
+			"width": 380
+		},
+		{
+			"aspectRatio": 1,
+			"height": 380,
+			"left": 10,
+			"top": 790,
+			"width": 380
+		},
+		{
+			"aspectRatio": 1,
+			"top": 1180,
+			"width": 380,
+			"height": 380,
+			"left": 10
+		}
+	]
+}
