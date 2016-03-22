@@ -12,11 +12,20 @@
 			var demos = [
 				{
 					sizes: [0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1],
-					className: "various"
+					className: "various",
+					config: {}
 				},
 				{
 					sizes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-					className: "squares"
+					className: "squares",
+					config: {}
+				},
+				{
+					sizes: [1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1.5, 1.73, 1.1, 0.5, 1],
+					className: "breakout",
+					config: {
+						"fullWidthBreakoutRowCadence": 3
+					}
 				}
 			];
 
@@ -30,7 +39,7 @@
 				`;
 				document.body.appendChild(section);
 
-				var geometry = justifiedLayout(demo.sizes);
+				var geometry = justifiedLayout(demo.sizes, demo.config);
 
 				console.log("geometry", geometry);
 				var boxes = geometry.boxes.map(function (box) {
