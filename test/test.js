@@ -41,31 +41,89 @@ describe('justified-layout', function() {
 			})).toEqual(fourSquares400);
 		});
 
-		xit('it should allow overriding of containerPadding', function() {
+		it('it should allow overriding of containerPadding', function() {
+
+			var geometry = justifiedLayout([1], {
+				containerPadding: 20
+			});
+
+			expect(geometry.boxes[0].top).toEqual(20);
+			expect(geometry.boxes[0].left).toEqual(20);
 
 		});
 
-		xit('it should allow overriding of containerPadding with multiple dimensions', function() {
+		it('it should allow overriding of containerPadding with multiple dimensions', function() {
+
+			var geometry = justifiedLayout([1], {
+				containerPadding: {
+					top: 50,
+					left: 5,
+					bottom: 10,
+					right: 10
+				}
+			});
+
+			expect(geometry.boxes[0].top).toEqual(50);
+			expect(geometry.boxes[0].left).toEqual(5);
 
 		});
 
-		xit('it should allow overriding of boxSpacing', function() {
+		it('it should allow overriding of boxSpacing', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1], {
+				boxSpacing: 40
+			});
+
+			// 10 + 320 + 40 = 370
+			expect(geometry.boxes[1].left).toEqual(370);
+			expect(geometry.boxes[3].top).toEqual(370);
 
 		});
 
-		xit('it should allow overriding of boxSpacing with multiple dimensions', function() {
+		it('it should allow overriding of boxSpacing with multiple dimensions', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1], {
+				boxSpacing: {
+					horizontal: 40,
+					vertical: 5
+				}
+			});
+
+			// 10 + 320 + 40 = 370
+			expect(geometry.boxes[1].left).toEqual(370);
+			// 10 + 320 + 5 = 335
+			expect(geometry.boxes[3].top).toEqual(335);
 
 		});
 
-		xit('it should allow overriding of targetRowHeight', function() {
+		it('it should allow overriding of targetRowHeight', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1], {
+				targetRowHeight: 255,
+				targetRowHeightTolerance: 0
+			});
+
+			expect(geometry.boxes[0].height).toEqual(255);
 
 		});
 
-		xit('it should allow overriding of targetRowHeightTolerance', function() {
+		it('it should allow overriding of targetRowHeightTolerance', function() {
+
+			var geometry = justifiedLayout([1, 1, 1], {
+				targetRowHeightTolerance: 0
+			});
+
+			expect(geometry.boxes[0].height).toEqual(320);
 
 		});
 
-		xit('it should allow overriding of maxNumRows', function() {
+		it('it should allow overriding of maxNumRows', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1, 1], {
+				maxNumRows: 1
+			});
+
+			expect(geometry.boxes.length).toEqual(3);
 
 		});
 
@@ -73,7 +131,13 @@ describe('justified-layout', function() {
 
 		});
 
-		xit('it should allow overriding of alwaysDsiplayOrphans', function() {
+		it('it should allow overriding of alwaysDisplayOrphans', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1], {
+				alwaysDisplayOrphans: false
+			});
+
+			expect(geometry.boxes.length).toEqual(3);
 
 		});
 
