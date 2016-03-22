@@ -201,11 +201,10 @@ You'd get an output like this:
 ## TODO
 
 * [x] ~~Get demos published on the gh-pages branch~~ http://flickr.github.io/justified-layout/
-* [ ] Implement right to left stacking
+* [x] ~~Pull in the better orphan height handling~~
+* [ ] Add support for the full width breakout row
 * [ ] Implement appending
 * [ ] Implement forceAspectRatio
-* [ ] Pull in the better orphan height handling
-* [ ] Add support for the full width breakout row
 * [ ] Get module published on npm
 * [ ] Use the module in Embedr
 * [ ] Add performance benchmarks

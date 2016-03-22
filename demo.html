@@ -32,7 +32,7 @@
 
 				var geometry = justifiedLayout(demo.sizes);
 
-				console.log("geometry", JSON.stringify(geometry));
+				console.log("geometry", geometry);
 				var boxes = geometry.boxes.map(function (box) {
 					return  `<div class="box" style="width: ${box.width}px; height: ${box.height}px; top: ${box.top}px; left: ${box.left}px"></div>`;
 				}).join('\n')
