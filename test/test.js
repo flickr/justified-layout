@@ -141,7 +141,15 @@ describe('justified-layout', function() {
 
 		});
 
-		xit('should allow overriding of fullWidthBreakoutRowCadence', function() {
+		it('should allow overriding of fullWidthBreakoutRowCadence', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1, 2, 2, 2, 2], {
+				fullWidthBreakoutRowCadence: 3
+			});
+
+			expect(geometry.boxes[5].width).toEqual(1040);
+			expect(geometry.boxes[5].top).toEqual(713);
+			expect(geometry.boxes[6].top).toEqual(geometry.boxes[5].top + geometry.boxes[5].height + 10);
 
 		});
 

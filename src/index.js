@@ -160,6 +160,13 @@ function computeLayout(itemLayoutData) {
 */
 function createNewRow() {
 
+	// Work out if this is a full width breakout row
+	if (layoutConfig.fullWidthBreakoutRowCadence !== false) {
+		if (((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence) === 0) {
+			var isBreakoutRow = true;
+		}
+	}
+
 	return new Row({
 		top: layoutData._containerHeight,
 		left: layoutConfig.containerPadding.left || layoutConfig.containerPadding,
@@ -170,7 +177,7 @@ function createNewRow() {
 		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
 		edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
 		rightToLeft: false,
-		isBreakoutRow: false
+		isBreakoutRow: isBreakoutRow
 	});
 }
 
