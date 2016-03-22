@@ -91,6 +91,20 @@ Row.prototype = {
 		    previousAspectRatio,
 		    previousTargetAspectRatio;
 
+		// Handle big full-width breakout photos if we're doing them
+		if (this.isBreakoutRow) {
+			// Only do it if there's no other items in this row
+			if (this.items.length === 0) {
+				// Only go full width if this photo is a square or landscape
+				if (itemData.aspectRatio >= 1) {
+					// Close out the row with a full width photo
+					this.items.push(itemData);
+					this.completeLayout(rowWidthWithoutSpacing / itemData.aspectRatio);
+					return true;
+				}
+			}
+		}
+
 		if (newAspectRatio === 0) {
 			// Error state (item not added, row layout not complete);
 			// handled by consumer
