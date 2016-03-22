@@ -35,13 +35,13 @@ describe('justified-layout', function() {
 			expect(justifiedLayout([1, 1, 1, 1])).toEqual(fourSquares);
 		});
 
-		it('it should allow overriding of containerWidth', function() {
+		it('should allow overriding of containerWidth', function() {
 			expect(justifiedLayout([1, 1, 1, 1], {
 				containerWidth: 400
 			})).toEqual(fourSquares400);
 		});
 
-		it('it should allow overriding of containerPadding', function() {
+		it('should allow overriding of containerPadding', function() {
 
 			var geometry = justifiedLayout([1], {
 				containerPadding: 20
@@ -52,7 +52,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('it should allow overriding of containerPadding with multiple dimensions', function() {
+		it('should allow overriding of containerPadding with multiple dimensions', function() {
 
 			var geometry = justifiedLayout([1], {
 				containerPadding: {
@@ -68,7 +68,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('it should allow overriding of boxSpacing', function() {
+		it('should allow overriding of boxSpacing', function() {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				boxSpacing: 40
@@ -80,7 +80,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('it should allow overriding of boxSpacing with multiple dimensions', function() {
+		it('should allow overriding of boxSpacing with multiple dimensions', function() {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				boxSpacing: {
@@ -96,7 +96,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('it should allow overriding of targetRowHeight', function() {
+		it('should allow overriding of targetRowHeight', function() {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				targetRowHeight: 255,
@@ -107,7 +107,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('it should allow overriding of targetRowHeightTolerance', function() {
+		it('should allow overriding of targetRowHeightTolerance', function() {
 
 			var geometry = justifiedLayout([1, 1, 1], {
 				targetRowHeightTolerance: 0
@@ -117,7 +117,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('it should allow overriding of maxNumRows', function() {
+		it('should allow overriding of maxNumRows', function() {
 
 			var geometry = justifiedLayout([1, 1, 1, 1, 1], {
 				maxNumRows: 1
@@ -127,11 +127,11 @@ describe('justified-layout', function() {
 
 		});
 
-		xit('it should allow overriding of forceAspectRatio', function() {
+		xit('should allow overriding of forceAspectRatio', function() {
 
 		});
 
-		it('it should allow overriding of alwaysDisplayOrphans', function() {
+		it('should allow overriding of alwaysDisplayOrphans', function() {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				alwaysDisplayOrphans: false
@@ -141,7 +141,19 @@ describe('justified-layout', function() {
 
 		});
 
-		xit('it should allow overriding of fullWidthBreakoutRowCadence', function() {
+		xit('should allow overriding of fullWidthBreakoutRowCadence', function() {
+
+		});
+
+	});
+
+	describe('orphans', function() {
+
+		it('should set them at the same height as previous rows which looks nicer', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1]);
+
+			expect(geometry.boxes[0].height).toEqual(geometry.boxes[3].height);
 
 		});
 

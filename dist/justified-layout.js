@@ -520,7 +520,7 @@ module.exports = function (input) {
 	};
 
 	// Merge defaults and config passed in
-	layoutConfig = merge(config, defaults);
+	layoutConfig = merge(defaults, config);
 
 	// Local
 	layoutData._layoutItems = [];
@@ -555,7 +555,8 @@ function computeLayout(itemLayoutData) {
 	var notAddedNotComplete,
 	    laidOutItems = [],
 	    itemAdded,
-	    currentRow;
+	    currentRow,
+	    nextToLastRowHeight;
 
 	// Loop through the items
 	itemLayoutData.some(function (itemData, i) {
@@ -610,7 +611,24 @@ function computeLayout(itemLayoutData) {
 	// Handle any leftover content (orphans) depending on where they lie
 	// in this layout update, and in the total content set.
 	if (currentRow && currentRow.getItems().length && layoutConfig.alwaysDisplayOrphans) {
-		currentRow.forceComplete(false);
+
+		// Last page of all content or orphan suppression is suppressed; lay out orphans.
+		if (layoutData._rows.length) {
+
+			// Only Match previous row's height if it exists and it isn't a breakout row
+			if (layoutData._rows[layoutData._rows.length - 1].isBreakoutRow) {
+				nextToLastRowHeight = layoutData._rows[layoutData._rows.length - 1].targetRowHeight;
+			} else {
+				nextToLastRowHeight = layoutData._rows[layoutData._rows.length - 1].height;
+			}
+
+			currentRow.forceComplete(false, nextToLastRowHeight || layoutConfig.targetRowHeight);
+		} else {
+
+			// ...else use target height if there is no other row height to reference.
+			currentRow.forceComplete(false);
+		}
+
 		laidOutItems = laidOutItems.concat(addRow(currentRow));
 	}
 
