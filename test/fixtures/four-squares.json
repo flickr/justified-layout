@@ -1,5 +1,5 @@
 {
-	"containerHeight": 690,
+	"containerHeight": 710,
 	"boxes": [
 		{
 			"aspectRatio": 1,
@@ -25,8 +25,8 @@
 		{
 			"aspectRatio": 1,
 			"top": 360,
-			"width": 320,
-			"height": 320,
+			"width": 340,
+			"height": 340,
 			"left": 10
 		}
 	]
