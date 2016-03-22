@@ -203,7 +203,7 @@ You'd get an output like this:
 * [x] ~~Get demos published on the gh-pages branch~~ http://flickr.github.io/justified-layout/
 * [x] ~~Pull in the better orphan height handling~~
 * [x] ~~Add support for the full width breakout row~~
-* [ ] Implement forceAspectRatio
+* [x] ~~Implement forceAspectRatio~~
 * [ ] Implement appending
 * [ ] Get module published on npm
 * [ ] Use the module in Embedr
