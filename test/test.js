@@ -127,7 +127,15 @@ describe('justified-layout', function() {
 
 		});
 
-		xit('should allow overriding of forceAspectRatio', function() {
+		it('should allow overriding of forceAspectRatio', function() {
+
+			var geometry = justifiedLayout([2, 2, 2, 2], {
+				forceAspectRatio: 1
+			});
+
+			expect(geometry.boxes[0].width).toEqual(340);
+			expect(geometry.boxes[0].height).toEqual(340);
+			expect(geometry.boxes[0].forcedAspectRatio).toEqual(true);
 
 		});
 
