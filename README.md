@@ -137,7 +137,7 @@ Set an aspect ratio that all boxes must be forced to.
 
 Default: false
 
-### config.alwaysDsiplayOrphans
+### config.alwaysDisplayOrphans
 
 Sometimes we'll be left with some boxes that don't completely fill a row within the `targetRowHeightTolerance` at the end of the list. We can discard them or return them as best we can.
 
@@ -203,9 +203,9 @@ You'd get an output like this:
 * [x] ~~Get demos published on the gh-pages branch~~ http://flickr.github.io/justified-layout/
 * [ ] Implement right to left stacking
 * [ ] Implement appending
+* [ ] Implement forceAspectRatio
 * [ ] Pull in the better orphan height handling
 * [ ] Add support for the full width breakout row
 * [ ] Get module published on npm
 * [ ] Use the module in Embedr
-* [ ] Full test coverage
 * [ ] Add performance benchmarks
