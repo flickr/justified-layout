@@ -83,7 +83,7 @@ Row.prototype = {
 	addItem: function addItem(itemData) {
 
 		var newItems = this.items.concat(itemData),
-
+		   
 		// Calculate aspect ratios for items only; exclude spacing
 		rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
 		    newAspectRatio = newItems.reduce(function (sum, item) {
@@ -536,13 +536,27 @@ module.exports = function (input) {
 	// Merge defaults and config passed in
 	layoutConfig = merge(defaults, config);
 
+	// Sort out padding and spacing values
+	var containerPadding = {};
+	var boxSpacing = {};
+
+	containerPadding.top = !isNaN(parseFloat(layoutConfig.containerPadding.top)) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
+	containerPadding.right = !isNaN(parseFloat(layoutConfig.containerPadding.right)) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
+	containerPadding.bottom = !isNaN(parseFloat(layoutConfig.containerPadding.bottom)) ? layoutConfig.containerPadding.bottom : layoutConfig.containerPadding;
+	containerPadding.left = !isNaN(parseFloat(layoutConfig.containerPadding.left)) ? layoutConfig.containerPadding.left : layoutConfig.containerPadding;
+	boxSpacing.horizontal = !isNaN(parseFloat(layoutConfig.boxSpacing.horizontal)) ? layoutConfig.boxSpacing.horizontal : layoutConfig.boxSpacing;
+	boxSpacing.vertical = !isNaN(parseFloat(layoutConfig.boxSpacing.vertical)) ? layoutConfig.boxSpacing.vertical : layoutConfig.boxSpacing;
+
+	layoutConfig.containerPadding = containerPadding;
+	layoutConfig.boxSpacing = boxSpacing;
+
 	// Local
 	layoutData._layoutItems = [];
 	layoutData._awakeItems = [];
 	layoutData._inViewportItems = [];
 	layoutData._leadingOrphans = [];
 	layoutData._trailingOrphans = [];
-	layoutData._containerHeight = layoutConfig.containerPadding.top || layoutConfig.containerPadding;
+	layoutData._containerHeight = layoutConfig.containerPadding.top;
 	layoutData._rows = [];
 	layoutData._orphans = [];
 
@@ -683,9 +697,9 @@ function createNewRow() {
 
 	return new Row({
 		top: layoutData._containerHeight,
-		left: layoutConfig.containerPadding.left || layoutConfig.containerPadding,
-		width: layoutConfig.containerWidth - (layoutConfig.containerPadding.left || layoutConfig.containerPadding) - (layoutConfig.containerPadding.right || layoutConfig.containerPadding),
-		spacing: layoutConfig.boxSpacing.horizontal || layoutConfig.boxSpacing,
+		left: layoutConfig.containerPadding.left,
+		width: layoutConfig.containerWidth - layoutConfig.containerPadding.left - layoutConfig.containerPadding.right,
+		spacing: layoutConfig.boxSpacing.horizontal,
 		targetRowHeight: layoutConfig.targetRowHeight,
 		targetRowHeightTolerance: layoutConfig.targetRowHeightTolerance,
 		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
@@ -709,7 +723,7 @@ function addRow(row) {
 	layoutData._layoutItems = layoutData._layoutItems.concat(row.getItems());
 
 	// Increment the container height
-	layoutData._containerHeight += row.height + (layoutConfig.boxSpacing.vertical || layoutConfig.boxSpacing);
+	layoutData._containerHeight += row.height + layoutConfig.boxSpacing.vertical;
 
 	return row.items;
 }

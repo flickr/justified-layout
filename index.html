@@ -174,11 +174,11 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 	<h3>Uneven Container Padding Config</h3>
 
 	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7], {
 	containerPadding: {
 		top: 50,
-		right: 0,
-		left: 100,
+		right: 20,
+		left: 200,
 		bottom: 50
 	}
 })
@@ -189,11 +189,11 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 		var halfSizeWithUnevenPadding = JSON.parse(JSON.stringify(halfSizeConfig));
 		halfSizeWithUnevenPadding.containerPadding = {
 			top: 25,
-			right: 0,
-			left: 50,
+			right: 10,
+			left: 100,
 			bottom: 25
 		};
-		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-containerPaddingUneven', halfSizeWithUnevenPadding);
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7], '.example-containerPaddingUneven', halfSizeWithUnevenPadding);
 	</script>
 
 
@@ -222,7 +222,7 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 	<h3>Target Row Height Config</h3>
 
 	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5, 0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
 	targetRowHeight: 100
 })
 	</pre></code></p>
@@ -231,7 +231,7 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 	<script type="text/javascript">
 		var halfSizeWithHeight = JSON.parse(JSON.stringify(halfSizeConfig));
 		halfSizeWithHeight.targetRowHeight = 50;
-		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-height', halfSizeWithHeight);
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5, 0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], '.example-height', halfSizeWithHeight);
 	</script>
 
 
