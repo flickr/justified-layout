@@ -205,6 +205,4 @@ You'd get an output like this:
 * [x] ~~Add support for the full width breakout row~~
 * [x] ~~Implement forceAspectRatio~~
 * [ ] Implement appending
-* [ ] Get module published on npm
-* [ ] Use the module in Embedr
 * [ ] Add performance benchmarks
