@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 
 <head>
-	<title>Justified Layout Demo</title>
+
+	<title>Justified Layout by Flickr</title>
+
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+	<style type="text/css" media="screen">
+		.example {
+			position: relative;
+			background: blue;
+		}
+	</style>
+
 	<script type="text/javascript" src="dist/justified-layout.js"></script>
 	<script type="text/javascript">
 
-		document.addEventListener('DOMContentLoaded', function() {
+		var halfSizeConfig = {
+			containerWidth: 530,
+			containerPadding: 5,
+			boxSpacing: 5,
+			targetRowHeight: 160
+		};
+
+		function generateJustifiedOutput(input, outputContainerSelector, config) {
 
 			var justifiedLayout = require('justified-layout');
+			var geometry = justifiedLayout(input, config);
+			var boxes = geometry.boxes.map(function (box) {
+				return  `<div class="box" style="width: ${box.width}px; height: ${box.height}px; top: ${box.top}px; left: ${box.left}px"></div>`;
+			}).join('\n');
 
-			var demos = [
-				{
-					sizes: [0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1],
-					className: "various"
-				},
-				{
-					sizes: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-					className: "squares"
-				}
-			];
+			document.querySelector(outputContainerSelector).innerHTML = boxes;
+			document.querySelector(outputContainerSelector).style.height = geometry.containerHeight + "px";
+			document.querySelector(outputContainerSelector).style.width = config.containerWidth + "px";
 
-			// Loop through the demos and put them in the page
-			demos.forEach(function (demo) {
-
-				var section = document.createElement("section");
-				section.innerHTML = `
-					<h2>Input: <code>[${demo.sizes.join(", ")}]</code></h2>
-					<div class="justified"></div>
-				`;
-				document.body.appendChild(section);
-
-				var geometry = justifiedLayout(demo.sizes);
-
-				console.log("geometry", JSON.stringify(geometry));
-				var boxes = geometry.boxes.map(function (box) {
-					return  `<div class="box" style="width: ${box.width}px; height: ${box.height}px; top: ${box.top}px; left: ${box.left}px"></div>`;
-				}).join('\n')
-
-				section.querySelector('.justified').innerHTML = boxes;
-				section.querySelector('.justified').style.height = geometry.containerHeight + "px";
-
-			});
-
-		}, false);
+		}
 
 	</script>
 
@@ -65,7 +58,230 @@
 
 <body>
 
-	<h1>justified-layout demo</h1>
+	<h1><a href="https://github.com/flickr/justified-layout">Justified Layout</a> by <a href="https://www.flickr.com">Flickr</a></h1>
+
+	<p>Accepts an array of boxes (with a lot of optional configuration options) and returns
+		geometry for a nice justified layout as seen all over <a href="https://www.flickr.com/explore">Flickr</a>
+
+
+
+	<h2>Installation</h2>
+
+	<p><code>npm install justified-layout</code></p>
+
+
+
+	<h2>Usage</h2>
+
+	<p><code>var layoutGeometry = require('justified-layout')([1.33, 1, 0.65] [, config])</code></p>
+
+
+
+	<h2>Inputs</h2>
+
+	<p>There's two options for input. The simplest is an array of numbers representing aspect ratios. Alternatively
+		you can pass in an array of objects with width and height properties.</p>
+
+	<p>Aspect ratios option:</p>
+
+	<p><code>[1.33, 1, 0.65]</code><p>
+
+	<p>Size object option:</p>
+
+	<p><code><pre>
+[{
+    width: 400,
+    height: 300
+},
+{
+    width: 300,
+    height: 300
+},
+{
+    width: 250,
+    height: 400
+}]
+	</pre></code></p>
+
+
+
+	<h2>Output</h2>
+
+	<p>Something like this:</p>
+
+	<p><code><pre>
+{
+    "containerHeight": 1269,
+    "boxes": [
+        {
+            "aspectRatio": 0.5,
+            "top": 10,
+            "width": 170,
+            "height": 340,
+            "left": 10
+        },
+        {
+            "aspectRatio": 1.5,
+            "top": 10,
+            "width": 510,
+            "height": 340,
+            "left": 190
+        },
+        ...
+    ]
+}
+	</pre></code></p>
+
+
+
+	<h2>Configuration Options</h2>
+
+	<p>No configuration is required but chances are you'd like to change some things. Here are your options:</p>
+
+
+
+	<h2>Live Examples</h2>
+
+	<p>All examples scaled to half the size for better presentation here.</p>
+
+
+	<h3>The Default</h3>
+
+	<p><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1])</code></p>
+
+	<div class="example example-default"></div>
+	<script type="text/javascript">
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1], '.example-default', halfSizeConfig);
+	</script>
+
+
+	<h3>Container Padding Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	containerPadding: 50
+})
+	</pre></code></p>
+
+	<div class="example example-containerPadding"></div>
+	<script type="text/javascript">
+		var halfSizeWithPadding = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithPadding.containerPadding = 25;
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-containerPadding', halfSizeWithPadding);
+	</script>
+
+
+	<h3>Uneven Container Padding Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	containerPadding: {
+		top: 50,
+		right: 0,
+		left: 100,
+		bottom: 50
+	}
+})
+	</pre></code></p>
+
+	<div class="example example-containerPaddingUneven"></div>
+	<script type="text/javascript">
+		var halfSizeWithUnevenPadding = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithUnevenPadding.containerPadding = {
+			top: 25,
+			right: 0,
+			left: 50,
+			bottom: 25
+		};
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-containerPaddingUneven', halfSizeWithUnevenPadding);
+	</script>
+
+
+	<h3>Box Spacing Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	boxSpacing: {
+		horizontal: 4,
+		vertical: 30
+	}
+})
+	</pre></code></p>
+
+	<div class="example example-boxSpacing"></div>
+	<script type="text/javascript">
+		var halfSizeWithBoxSpacing = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithBoxSpacing.boxSpacing = {
+			horizontal: 2,
+			vertical: 15
+		};
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-boxSpacing', halfSizeWithBoxSpacing);
+	</script>
+
+
+	<h3>Target Row Height Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	targetRowHeight: 100
+})
+	</pre></code></p>
+
+	<div class="example example-height"></div>
+	<script type="text/javascript">
+		var halfSizeWithHeight = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithHeight.targetRowHeight = 50;
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-height', halfSizeWithHeight);
+	</script>
+
+
+	<h3>Force Aspect Ratio Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	forceAspectRatio: 1
+})
+	</pre></code></p>
+
+	<div class="example example-force"></div>
+	<script type="text/javascript">
+		var halfSizeWithForce = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithForce.forceAspectRatio = 1;
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-force', halfSizeWithForce);
+	</script>
+
+
+	<h3>Don't Display Orphans Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
+	alwaysDisplayOrphans: false
+})
+	</pre></code></p>
+
+	<div class="example example-orphans"></div>
+	<script type="text/javascript">
+		var halfSizeWithOrphans = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithOrphans.alwaysDisplayOrphans = false;
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], '.example-orphans', halfSizeWithOrphans);
+	</script>
+
+
+	<h3>Full Width Breakout Row Config</h3>
+
+	<p><code><pre>
+var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	fullWidthBreakoutRowCadence: 2
+})
+	</pre></code></p>
+
+	<div class="example example-breakout"></div>
+	<script type="text/javascript">
+		var halfSizeWithBreakout = JSON.parse(JSON.stringify(halfSizeConfig));
+		halfSizeWithBreakout.fullWidthBreakoutRowCadence = 2;
+		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-breakout', halfSizeWithBreakout);
+	</script>
+
 
 </body>
 

@@ -94,6 +94,20 @@ Row.prototype = {
 		    previousAspectRatio,
 		    previousTargetAspectRatio;
 
+		// Handle big full-width breakout photos if we're doing them
+		if (this.isBreakoutRow) {
+			// Only do it if there's no other items in this row
+			if (this.items.length === 0) {
+				// Only go full width if this photo is a square or landscape
+				if (itemData.aspectRatio >= 1) {
+					// Close out the row with a full width photo
+					this.items.push(itemData);
+					this.completeLayout(rowWidthWithoutSpacing / itemData.aspectRatio);
+					return true;
+				}
+			}
+		}
+
 		if (newAspectRatio === 0) {
 			// Error state (item not added, row layout not complete);
 			// handled by consumer
@@ -520,7 +534,7 @@ module.exports = function (input) {
 	};
 
 	// Merge defaults and config passed in
-	layoutConfig = merge(config, defaults);
+	layoutConfig = merge(defaults, config);
 
 	// Local
 	layoutData._layoutItems = [];
@@ -555,7 +569,16 @@ function computeLayout(itemLayoutData) {
 	var notAddedNotComplete,
 	    laidOutItems = [],
 	    itemAdded,
-	    currentRow;
+	    currentRow,
+	    nextToLastRowHeight;
+
+	// Apply forced aspect ratio if specified, and set a flag.
+	if (layoutConfig.forceAspectRatio) {
+		itemLayoutData.forEach(function (itemData) {
+			itemData.forcedAspectRatio = true;
+			itemData.aspectRatio = layoutConfig.forceAspectRatio;
+		});
+	}
 
 	// Loop through the items
 	itemLayoutData.some(function (itemData, i) {
@@ -610,7 +633,24 @@ function computeLayout(itemLayoutData) {
 	// Handle any leftover content (orphans) depending on where they lie
 	// in this layout update, and in the total content set.
 	if (currentRow && currentRow.getItems().length && layoutConfig.alwaysDisplayOrphans) {
-		currentRow.forceComplete(false);
+
+		// Last page of all content or orphan suppression is suppressed; lay out orphans.
+		if (layoutData._rows.length) {
+
+			// Only Match previous row's height if it exists and it isn't a breakout row
+			if (layoutData._rows[layoutData._rows.length - 1].isBreakoutRow) {
+				nextToLastRowHeight = layoutData._rows[layoutData._rows.length - 1].targetRowHeight;
+			} else {
+				nextToLastRowHeight = layoutData._rows[layoutData._rows.length - 1].height;
+			}
+
+			currentRow.forceComplete(false, nextToLastRowHeight || layoutConfig.targetRowHeight);
+		} else {
+
+			// ...else use target height if there is no other row height to reference.
+			currentRow.forceComplete(false);
+		}
+
 		laidOutItems = laidOutItems.concat(addRow(currentRow));
 	}
 
@@ -628,6 +668,13 @@ function computeLayout(itemLayoutData) {
 */
 function createNewRow() {
 
+	// Work out if this is a full width breakout row
+	if (layoutConfig.fullWidthBreakoutRowCadence !== false) {
+		if ((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence === 0) {
+			var isBreakoutRow = true;
+		}
+	}
+
 	return new Row({
 		top: layoutData._containerHeight,
 		left: layoutConfig.containerPadding.left || layoutConfig.containerPadding,
@@ -638,7 +685,7 @@ function createNewRow() {
 		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
 		edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
 		rightToLeft: false,
-		isBreakoutRow: false
+		isBreakoutRow: isBreakoutRow
 	});
 }
 
