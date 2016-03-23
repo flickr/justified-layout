@@ -175,4 +175,19 @@ describe('justified-layout', function() {
 
 	});
 
+	describe('containerPadding', function() {
+
+		it('should add padding to the bottom of the container too', function() {
+
+			var geometry = justifiedLayout([1], {
+				containerPadding: 100
+			});
+
+			// 100 + 320 + 100
+			expect(geometry.containerHeight).toEqual(520);
+
+		});
+
+	});
+
 });

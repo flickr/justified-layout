@@ -154,6 +154,12 @@ function computeLayout(itemLayoutData) {
 
 	}
 
+	// We need to clean up the bottom container padding
+	// First remove the height added for box spacing
+	layoutData._containerHeight = layoutData._containerHeight - (layoutConfig.boxSpacing.vertical || layoutConfig.boxSpacing);
+	// Then add our bottom container padding
+	layoutData._containerHeight = layoutData._containerHeight + (layoutConfig.containerPadding.bottom || layoutConfig.containerPadding);
+
 	return {
 		containerHeight: layoutData._containerHeight,
 		boxes: layoutData._layoutItems

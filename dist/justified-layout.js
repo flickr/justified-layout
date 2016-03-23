@@ -572,6 +572,14 @@ function computeLayout(itemLayoutData) {
 	    currentRow,
 	    nextToLastRowHeight;
 
+	// Apply forced aspect ratio if specified, and set a flag.
+	if (layoutConfig.forceAspectRatio) {
+		itemLayoutData.forEach(function (itemData) {
+			itemData.forcedAspectRatio = true;
+			itemData.aspectRatio = layoutConfig.forceAspectRatio;
+		});
+	}
+
 	// Loop through the items
 	itemLayoutData.some(function (itemData, i) {
 
@@ -645,6 +653,12 @@ function computeLayout(itemLayoutData) {
 
 		laidOutItems = laidOutItems.concat(addRow(currentRow));
 	}
+
+	// We need to clean up the bottom container padding
+	// First remove the height added for box spacing
+	layoutData._containerHeight = layoutData._containerHeight - (layoutConfig.boxSpacing.vertical || layoutConfig.boxSpacing);
+	// Then add our bottom container padding
+	layoutData._containerHeight = layoutData._containerHeight + (layoutConfig.containerPadding.bottom || layoutConfig.containerPadding);
 
 	return {
 		containerHeight: layoutData._containerHeight,
