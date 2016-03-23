@@ -138,6 +138,101 @@
 
 	<p>No configuration is required but chances are you'd like to change some things. Here are your options:</p>
 
+	<table class="pure-table pure-table-striped">
+		<thead>
+			<tr>
+				<th>Parameter</th>
+				<th>Type</th>
+				<th>Default</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tr>
+			<td><code>containerWidth</code></td>
+			<td>Integer</td>
+			<td><code>1060</code></td>
+			<td>The width that boxes will be contained within irrelevant of padding.</td>
+		</tr>
+		<tr>
+			<td><code>containerPadding</code></td>
+			<td>Integer or Object</td>
+			<td><code>10</code></td>
+			<td>Provide a single integer to apply padding to all sides or provide an object to apply
+				individual values to each side, like this:
+
+				<code><pre>
+containerPadding: {
+    top: 50,
+    right: 5,
+    bottom: 50,
+    left: 5
+}
+				</pre></code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>boxSpacing</code></td>
+			<td>Integer or Object</td>
+			<td><code>10</code></td>
+			<td>Provide a single integer to apply spacing both horizontally and vertically or provide an object to
+				apply individual values to each axis, like this:
+
+				<code><pre>
+boxSpacing: {
+    horizontal: 10,
+    vertical: 30
+}
+				</pre></code>
+			</td>
+		</tr>
+		<tr>
+			<td><code>targetRowHeight</code></td>
+			<td>Integer</td>
+			<td><code>320</code></td>
+			<td>It's called a target because row height is the lever we use in order to fit
+				everything in nicely. The algorithm will get as close to the target row height
+				as it can.</td>
+		</tr>
+		<tr>
+			<td><code>targetRowHeightTolerance</code></td>
+			<td>Float</td>
+			<td><code>0.25</code></td>
+			<td>How far row heights can stray from <code>targetRowHeight</code>. <code>0</code> would
+				force rows to be the <code>targetRowHeight</code> exactly and would likely make it
+				impossible to justify. The value must be between <code>0</code> and <code>1</code>.</td>
+		</tr>
+		<tr>
+			<td><code>maxNumRows</code></td>
+			<td>Integer</td>
+			<td><code>Number.POSITIVE_INFINITY</code></td>
+			<td>Will stop adding rows at this number regardless of how many items still need to be
+				laid out.</td>
+		</tr>
+		<tr>
+			<td><code>forceAspectRatio</code></td>
+			<td>Boolean or Float</td>
+			<td><code>false</code></td>
+			<td>Provide an aspect ratio here to return everything in that aspect ratio. Makes the values
+				in your input array irrelevant. The length of the array remains relevant.</td>
+		</tr>
+		<tr>
+			<td><code>alwaysDisplayOrphans</code></td>
+			<td>Boolean</td>
+			<td><code>true</code></td>
+			<td>By default we'll return items at the end of a justified layout even if they don't make
+				a full row. If <code>false</code> they'll be omitted from the output.</td>
+		</tr>
+		<tr>
+			<td><code>fullWidthBreakoutRowCadence</code></td>
+			<td>Boolean or Integer</td>
+			<td><code>false</code></td>
+			<td>If you'd like to insert a full width box every <code>n</code> rows you can specify
+				it with this parameter. The box on that row will ignore the <code>targetRowHeight</code>,
+				make itself as wide as <code>containerWidth</code> - <code>containerPadding</code> and be
+				as tall as its aspect ratio defines. It'll only happen if that item has an aspect ratio >= 1.
+				Best to have a look at the examples to see what this does.</td>
+		</tr>
+	</table>
 
 
 	<h2>Live Examples</h2>
