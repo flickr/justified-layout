@@ -5,13 +5,8 @@
 	<title>Justified Layout by Flickr</title>
 
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-
-	<style type="text/css" media="screen">
-		.example {
-			position: relative;
-			background: blue;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<script type="text/javascript" src="dist/justified-layout.js"></script>
 	<script type="text/javascript">
@@ -39,21 +34,6 @@
 
 	</script>
 
-	<style type="text/css" media="screen">
-
-		.justified {
-			position: relative;
-			background: seagreen;
-			width: 1060px;
-		}
-
-		.box {
-			position: absolute;
-			background: yellowgreen;
-		}
-
-	</style>
-
 </head>
 
 <body>
@@ -61,19 +41,19 @@
 	<h1><a href="https://github.com/flickr/justified-layout">Justified Layout</a> by <a href="https://www.flickr.com">Flickr</a></h1>
 
 	<p>Accepts an array of boxes (with a lot of optional configuration options) and returns
-		geometry for a nice justified layout as seen all over <a href="https://www.flickr.com/explore">Flickr</a>
+		geometry for a nice justified layout as seen all over <a href="https://www.flickr.com/explore">Flickr</a>.</p>
 
 
 
 	<h2>Installation</h2>
 
-	<p><code>npm install justified-layout</code></p>
+	<p><pre><code>npm install justified-layout</code></pre></p>
 
 
 
 	<h2>Usage</h2>
 
-	<p><code>var layoutGeometry = require('justified-layout')([1.33, 1, 0.65] [, config])</code></p>
+	<p><pre><code>var layoutGeometry = require('justified-layout')([1.33, 1, 0.65] [, config])</code></pre></p>
 
 
 
@@ -84,12 +64,11 @@
 
 	<p>Aspect ratios option:</p>
 
-	<p><code>[1.33, 1, 0.65]</code><p>
+	<p><pre><code>[1.33, 1, 0.65]</code></pre><p>
 
 	<p>Size object option:</p>
 
-	<p><code><pre>
-[{
+	<p><pre><code>[{
     width: 400,
     height: 300
 },
@@ -100,8 +79,7 @@
 {
     width: 250,
     height: 400
-}]
-	</pre></code></p>
+}]</code></pre></p>
 
 
 
@@ -109,8 +87,7 @@
 
 	<p>Something like this:</p>
 
-	<p><code><pre>
-{
+	<p><pre><code>{
     "containerHeight": 1269,
     "boxes": [
         {
@@ -129,8 +106,7 @@
         },
         ...
     ]
-}
-	</pre></code></p>
+}</code></pre></p>
 
 
 
@@ -138,7 +114,7 @@
 
 	<p>No configuration is required but chances are you'd like to change some things. Here are your options:</p>
 
-	<table class="pure-table pure-table-striped">
+	<table class="pure-table pure-table-horizontal">
 		<thead>
 			<tr>
 				<th>Parameter</th>
@@ -148,101 +124,97 @@
 			</tr>
 		</thead>
 		<tr>
-			<td><code>containerWidth</code></td>
+			<td><pre class="inline"><code>containerWidth</code></pre></td>
 			<td>Integer</td>
-			<td><code>1060</code></td>
-			<td>The width that boxes will be contained within irrelevant of padding.</td>
+			<td><pre class="inline"><code>1060</code></pre></td>
+			<td><p>The width that boxes will be contained within irrelevant of padding.</p></td>
 		</tr>
 		<tr>
-			<td><code>containerPadding</code></td>
+			<td><pre class="inline"><code>containerPadding</code></pre></td>
 			<td>Integer or Object</td>
-			<td><code>10</code></td>
-			<td>Provide a single integer to apply padding to all sides or provide an object to apply
-				individual values to each side, like this:
+			<td><pre class="inline"><code>10</code></pre></td>
+			<td><p>Provide a single integer to apply padding to all sides or provide an object to apply
+				individual values to each side, like this:</p>
 
-				<code><pre>
-containerPadding: {
+				<pre><code>containerPadding: {
     top: 50,
     right: 5,
     bottom: 50,
     left: 5
-}
-				</pre></code>
+}</code></pre>
 			</td>
 		</tr>
 		<tr>
-			<td><code>boxSpacing</code></td>
+			<td><pre class="inline"><code>boxSpacing</code></pre></td>
 			<td>Integer or Object</td>
-			<td><code>10</code></td>
-			<td>Provide a single integer to apply spacing both horizontally and vertically or provide an object to
-				apply individual values to each axis, like this:
+			<td><pre class="inline"><code>10</code></pre></td>
+			<td><p>Provide a single integer to apply spacing both horizontally and vertically or provide an object to
+				apply individual values to each axis, like this:</p>
 
-				<code><pre>
-boxSpacing: {
+				<pre><code>boxSpacing: {
     horizontal: 10,
     vertical: 30
-}
-				</pre></code>
+}</code></pre>
 			</td>
 		</tr>
 		<tr>
-			<td><code>targetRowHeight</code></td>
+			<td><pre class="inline"><code>targetRowHeight</code></pre></td>
 			<td>Integer</td>
-			<td><code>320</code></td>
-			<td>It's called a target because row height is the lever we use in order to fit
+			<td><pre class="inline"><code>320</code></pre></td>
+			<td><p>It's called a target because row height is the lever we use in order to fit
 				everything in nicely. The algorithm will get as close to the target row height
-				as it can.</td>
+				as it can.</p></td>
 		</tr>
 		<tr>
-			<td><code>targetRowHeightTolerance</code></td>
+			<td><pre class="inline"><code>targetRowHeightTolerance</code></pre></td>
 			<td>Float</td>
-			<td><code>0.25</code></td>
-			<td>How far row heights can stray from <code>targetRowHeight</code>. <code>0</code> would
-				force rows to be the <code>targetRowHeight</code> exactly and would likely make it
-				impossible to justify. The value must be between <code>0</code> and <code>1</code>.</td>
+			<td><pre class="inline"><code>0.25</code></pre></td>
+			<td><p>How far row heights can stray from <pre class="inline"><code>targetRowHeight</code></pre>. <pre class="inline"><code>0</code></pre> would
+				force rows to be the <pre class="inline"><code>targetRowHeight</code></pre> exactly and would likely make it
+				impossible to justify. The value must be between <pre class="inline"><code>0</code></pre> and <pre class="inline"><code>1</code></pre>.</p></td>
 		</tr>
 		<tr>
-			<td><code>maxNumRows</code></td>
+			<td><pre class="inline"><code>maxNumRows</code></pre></td>
 			<td>Integer</td>
-			<td><code>Number.POSITIVE_INFINITY</code></td>
-			<td>Will stop adding rows at this number regardless of how many items still need to be
-				laid out.</td>
+			<td><pre class="inline"><code>Number.POSITIVE_INFINITY</code></pre></td>
+			<td><p>Will stop adding rows at this number regardless of how many items still need to be
+				laid out.</p></td>
 		</tr>
 		<tr>
-			<td><code>forceAspectRatio</code></td>
+			<td><pre class="inline"><code>forceAspectRatio</code></pre></td>
 			<td>Boolean or Float</td>
-			<td><code>false</code></td>
-			<td>Provide an aspect ratio here to return everything in that aspect ratio. Makes the values
-				in your input array irrelevant. The length of the array remains relevant.</td>
+			<td><pre class="inline"><code>false</code></pre></td>
+			<td><p>Provide an aspect ratio here to return everything in that aspect ratio. Makes the values
+				in your input array irrelevant. The length of the array remains relevant.</p></td>
 		</tr>
 		<tr>
-			<td><code>alwaysDisplayOrphans</code></td>
+			<td><pre class="inline"><code>alwaysDisplayOrphans</code></pre></td>
 			<td>Boolean</td>
-			<td><code>true</code></td>
-			<td>By default we'll return items at the end of a justified layout even if they don't make
-				a full row. If <code>false</code> they'll be omitted from the output.</td>
+			<td><pre class="inline"><code>true</code></pre></td>
+			<td><p>By default we'll return items at the end of a justified layout even if they don't make
+				a full row. If <pre class="inline"><code>false</code></pre> they'll be omitted from the output.</p></td>
 		</tr>
 		<tr>
-			<td><code>fullWidthBreakoutRowCadence</code></td>
+			<td><pre class="inline"><code>fullWidthBreakoutRowCadence</code></pre></td>
 			<td>Boolean or Integer</td>
-			<td><code>false</code></td>
-			<td>If you'd like to insert a full width box every <code>n</code> rows you can specify
-				it with this parameter. The box on that row will ignore the <code>targetRowHeight</code>,
-				make itself as wide as <code>containerWidth</code> - <code>containerPadding</code> and be
+			<td><pre class="inline"><code>false</code></pre></td>
+			<td><p>If you'd like to insert a full width box every <pre class="inline"><code>n</code></pre> rows you can specify
+				it with this parameter. The box on that row will ignore the <pre class="inline"><code>targetRowHeight</code></pre>,
+				make itself as wide as <pre class="inline"><code>containerWidth</code></pre> - <pre class="inline"><code>containerPadding</code></pre> and be
 				as tall as its aspect ratio defines. It'll only happen if that item has an aspect ratio >= 1.
-				Best to have a look at the examples to see what this does.</td>
+				Best to have a look at the examples to see what this does.</p></td>
 		</tr>
 	</table>
 
 
 	<h2>Live Examples</h2>
 
-	<p>All examples scaled to half the size for better presentation here.</p>
+	<p>*All examples scaled to half the size for better presentation here.</p>
 
 
 	<h3>The Default</h3>
 
-	<p><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1])</code></p>
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2, 2.1])</code></pre></p>
 
 	<div class="example example-default"></div>
 	<script type="text/javascript">
@@ -252,11 +224,9 @@ boxSpacing: {
 
 	<h3>Container Padding Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
 	containerPadding: 50
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-containerPadding"></div>
 	<script type="text/javascript">
@@ -268,16 +238,14 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 
 	<h3>Uneven Container Padding Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7], {
 	containerPadding: {
 		top: 50,
 		right: 20,
 		left: 200,
 		bottom: 50
 	}
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-containerPaddingUneven"></div>
 	<script type="text/javascript">
@@ -294,14 +262,12 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7], {
 
 	<h3>Box Spacing Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
 	boxSpacing: {
 		horizontal: 4,
 		vertical: 30
 	}
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-boxSpacing"></div>
 	<script type="text/javascript">
@@ -316,11 +282,9 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 
 	<h3>Target Row Height Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5, 0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5, 0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
 	targetRowHeight: 100
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-height"></div>
 	<script type="text/javascript">
@@ -332,11 +296,9 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 
 	<h3>Force Aspect Ratio Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
 	forceAspectRatio: 1
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-force"></div>
 	<script type="text/javascript">
@@ -348,11 +310,9 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 
 	<h3>Don't Display Orphans Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
 	alwaysDisplayOrphans: false
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-orphans"></div>
 	<script type="text/javascript">
@@ -364,11 +324,9 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2],
 
 	<h3>Full Width Breakout Row Config</h3>
 
-	<p><code><pre>
-var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
+	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], {
 	fullWidthBreakoutRowCadence: 2
-})
-	</pre></code></p>
+})</code></pre></p>
 
 	<div class="example example-breakout"></div>
 	<script type="text/javascript">
@@ -377,6 +335,8 @@ var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 
 		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2, 1.5], '.example-breakout', halfSizeWithBreakout);
 	</script>
 
+
+	<a href="https://github.com/flickr/justified-layout"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 
 </body>
 

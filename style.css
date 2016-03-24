@@ -1,0 +1,48 @@
+body {
+	background: rgb(254, 254, 254);
+	padding: 8%;
+}
+
+pre {
+	font-family: Menlo, Consolas, Courier, monospace;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.05);
+	padding: 10px;
+}
+
+pre.inline {
+	display: inline;
+	padding: 0 5px;
+}
+
+h1 { font-size: 50px; }
+
+h1 a {
+	color: rgb(25, 104, 208);
+	text-decoration: none;
+}
+
+h1 a:last-child { color: rgb(253, 23, 129); }
+
+h2 { margin-top: 70px; }
+
+h3 { margin-top: 50px; }
+
+table.pure-table { border: 1px solid rgba(0, 0, 0, 0.5); }
+
+table.pure-table th {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+	padding: 3em 1em;
+}
+
+table.pure-table p { line-height: 1.7; }
+
+.example {
+	position: relative;
+	background: rgba(253, 23, 129, 0.5);
+}
+
+.box {
+	position: absolute;
+	background: rgba(0, 0, 0, 0.3);
+}
