@@ -124,15 +124,15 @@
 			</tr>
 		</thead>
 		<tr>
-			<td><pre class="inline"><code>containerWidth</code></pre></td>
+			<td><code class="inline">containerWidth</code></td>
 			<td>Integer</td>
-			<td><pre class="inline"><code>1060</code></pre></td>
+			<td><code class="inline">1060</code></td>
 			<td><p>The width that boxes will be contained within irrelevant of padding.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>containerPadding</code></pre></td>
+			<td><code class="inline">containerPadding</code></td>
 			<td>Integer or Object</td>
-			<td><pre class="inline"><code>10</code></pre></td>
+			<td><code class="inline">10</code></td>
 			<td><p>Provide a single integer to apply padding to all sides or provide an object to apply
 				individual values to each side, like this:</p>
 
@@ -145,9 +145,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>boxSpacing</code></pre></td>
+			<td><code class="inline">boxSpacing</code></td>
 			<td>Integer or Object</td>
-			<td><pre class="inline"><code>10</code></pre></td>
+			<td><code class="inline">10</code></td>
 			<td><p>Provide a single integer to apply spacing both horizontally and vertically or provide an object to
 				apply individual values to each axis, like this:</p>
 
@@ -158,49 +158,49 @@
 			</td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>targetRowHeight</code></pre></td>
+			<td><code class="inline">targetRowHeight</code></td>
 			<td>Integer</td>
-			<td><pre class="inline"><code>320</code></pre></td>
+			<td><code class="inline">320</code></td>
 			<td><p>It's called a target because row height is the lever we use in order to fit
 				everything in nicely. The algorithm will get as close to the target row height
 				as it can.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>targetRowHeightTolerance</code></pre></td>
+			<td><code class="inline">targetRowHeightTolerance</code></td>
 			<td>Float</td>
-			<td><pre class="inline"><code>0.25</code></pre></td>
-			<td><p>How far row heights can stray from <pre class="inline"><code>targetRowHeight</code></pre>. <pre class="inline"><code>0</code></pre> would
-				force rows to be the <pre class="inline"><code>targetRowHeight</code></pre> exactly and would likely make it
-				impossible to justify. The value must be between <pre class="inline"><code>0</code></pre> and <pre class="inline"><code>1</code></pre>.</p></td>
+			<td><code class="inline">0.25</code></td>
+			<td><p>How far row heights can stray from <code class="inline">targetRowHeight</code>. <code class="inline">0</code> would
+				force rows to be the <code class="inline">targetRowHeight</code> exactly and would likely make it
+				impossible to justify. The value must be between <code class="inline">0</code> and <code class="inline">1</code>.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>maxNumRows</code></pre></td>
+			<td><code class="inline">maxNumRows</code></td>
 			<td>Integer</td>
-			<td><pre class="inline"><code>Number.POSITIVE_INFINITY</code></pre></td>
+			<td><code class="inline">Number.POSITIVE_INFINITY</code></td>
 			<td><p>Will stop adding rows at this number regardless of how many items still need to be
 				laid out.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>forceAspectRatio</code></pre></td>
+			<td><code class="inline">forceAspectRatio</code></td>
 			<td>Boolean or Float</td>
-			<td><pre class="inline"><code>false</code></pre></td>
+			<td><code class="inline">false</code></td>
 			<td><p>Provide an aspect ratio here to return everything in that aspect ratio. Makes the values
 				in your input array irrelevant. The length of the array remains relevant.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>showWidows</code></pre></td>
+			<td><code class="inline">showWidows</code></td>
 			<td>Boolean</td>
-			<td><pre class="inline"><code>true</code></pre></td>
+			<td><code class="inline">true</code></td>
 			<td><p>By default we'll return items at the end of a justified layout even if they don't make
-				a full row. If <pre class="inline"><code>false</code></pre> they'll be omitted from the output.</p></td>
+				a full row. If <code class="inline">false</code> they'll be omitted from the output.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>fullWidthBreakoutRowCadence</code></pre></td>
+			<td><code class="inline">fullWidthBreakoutRowCadence</code></td>
 			<td>Boolean or Integer</td>
-			<td><pre class="inline"><code>false</code></pre></td>
-			<td><p>If you'd like to insert a full width box every <pre class="inline"><code>n</code></pre> rows you can specify
-				it with this parameter. The box on that row will ignore the <pre class="inline"><code>targetRowHeight</code></pre>,
-				make itself as wide as <pre class="inline"><code>containerWidth</code></pre> - <pre class="inline"><code>containerPadding</code></pre> and be
+			<td><code class="inline">false</code></td>
+			<td><p>If you'd like to insert a full width box every <code class="inline">n</code> rows you can specify
+				it with this parameter. The box on that row will ignore the <code class="inline">targetRowHeight</code>,
+				make itself as wide as <code class="inline">containerWidth</code> - <code class="inline">containerPadding</code> and be
 				as tall as its aspect ratio defines. It'll only happen if that item has an aspect ratio >= 1.
 				Best to have a look at the examples to see what this does.</p></td>
 		</tr>
