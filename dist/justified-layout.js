@@ -83,7 +83,7 @@ Row.prototype = {
 	addItem: function addItem(itemData) {
 
 		var newItems = this.items.concat(itemData),
-		   
+
 		// Calculate aspect ratios for items only; exclude spacing
 		rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
 		    newAspectRatio = newItems.reduce(function (sum, item) {
@@ -529,7 +529,7 @@ module.exports = function (input) {
 		targetRowHeightTolerance: 0.25,
 		maxNumRows: Number.POSITIVE_INFINITY,
 		forceAspectRatio: false,
-		alwaysDisplayOrphans: true,
+		showWidows: true,
 		fullWidthBreakoutRowCadence: false
 	};
 
@@ -646,7 +646,7 @@ function computeLayout(itemLayoutData) {
 
 	// Handle any leftover content (orphans) depending on where they lie
 	// in this layout update, and in the total content set.
-	if (currentRow && currentRow.getItems().length && layoutConfig.alwaysDisplayOrphans) {
+	if (currentRow && currentRow.getItems().length && layoutConfig.showWidows) {
 
 		// Last page of all content or orphan suppression is suppressed; lay out orphans.
 		if (layoutData._rows.length) {

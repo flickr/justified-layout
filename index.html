@@ -188,7 +188,7 @@
 				in your input array irrelevant. The length of the array remains relevant.</p></td>
 		</tr>
 		<tr>
-			<td><pre class="inline"><code>alwaysDisplayOrphans</code></pre></td>
+			<td><pre class="inline"><code>showWidows</code></pre></td>
 			<td>Boolean</td>
 			<td><pre class="inline"><code>true</code></pre></td>
 			<td><p>By default we'll return items at the end of a justified layout even if they don't make
@@ -311,13 +311,13 @@
 	<h3>Don't Display Orphans Config</h3>
 
 	<p><pre><code>var geometry = justifiedLayout([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], {
-	alwaysDisplayOrphans: false
+	showWidows: false
 })</code></pre></p>
 
 	<div class="example example-orphans"></div>
 	<script type="text/javascript">
 		var halfSizeWithOrphans = JSON.parse(JSON.stringify(halfSizeConfig));
-		halfSizeWithOrphans.alwaysDisplayOrphans = false;
+		halfSizeWithOrphans.showWidows = false;
 		generateJustifiedOutput([0.5, 1.5, 1, 1.8, 0.4, 0.7, 0.9, 1.1, 1.7, 2.2], '.example-orphans', halfSizeWithOrphans);
 	</script>
 
