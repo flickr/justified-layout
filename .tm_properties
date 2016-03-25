@@ -1,0 +1,9 @@
+excludeInFolderSearch = "{$excludeInFolderSearch,.git}"
+excludeInFolderSearch = "{$excludeInFolderSearch,lib}"
+excludeInFolderSearch = "{$excludeInFolderSearch,dist}"
+excludeInFolderSearch = "{$excludeInFolderSearch,node_modules}"
+
+excludeInFileChooser = "{$excludeInFolderSearch,.git}"
+excludeInFileChooser = "{$excludeInFolderSearch,lib}"
+excludeInFileChooser = "{$excludeInFolderSearch,dist}"
+excludeInFileChooser = "{$excludeInFolderSearch,node_modules}"
