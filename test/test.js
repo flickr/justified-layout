@@ -191,6 +191,17 @@ describe('justified-layout', function() {
 
 		});
 
+		it('should handle 0 padding', function() {
+
+			var geometry = justifiedLayout([1, 1, 1], {
+				containerPadding: 0,
+				targetRowHeightTolerance: 0
+			});
+
+			expect(geometry.containerHeight).toEqual(320);
+
+		});
+
 	});
 
 });
