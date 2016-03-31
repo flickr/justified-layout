@@ -86,7 +86,7 @@ Row.prototype = {
 	addItem: function addItem(itemData) {
 
 		var newItems = this.items.concat(itemData),
-		   
+
 		// Calculate aspect ratios for items only; exclude spacing
 		rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
 		    newAspectRatio = newItems.reduce(function (sum, item) {
@@ -676,9 +676,9 @@ function computeLayout(itemLayoutData) {
 
 	// We need to clean up the bottom container padding
 	// First remove the height added for box spacing
-	layoutData._containerHeight = layoutData._containerHeight - (layoutConfig.boxSpacing.vertical || layoutConfig.boxSpacing);
+	layoutData._containerHeight = layoutData._containerHeight - layoutConfig.boxSpacing.vertical;
 	// Then add our bottom container padding
-	layoutData._containerHeight = layoutData._containerHeight + (layoutConfig.containerPadding.bottom || layoutConfig.containerPadding);
+	layoutData._containerHeight = layoutData._containerHeight + layoutConfig.containerPadding.bottom;
 
 	return {
 		containerHeight: layoutData._containerHeight,

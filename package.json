@@ -26,11 +26,12 @@
   "author": "Jim Whimpey <whimpey@yahoo-inc.com>",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "babel-preset-es2015": "^6.3.13",
     "browserify": "~11.1.0",
     "expect": "1.14.0",
     "mocha": "2.4.5",
-    "uglify": "~0.1.5"
+    "uglify-js": "2.6.2"
   },
   "dependencies": {
     "merge": "1.2.0"

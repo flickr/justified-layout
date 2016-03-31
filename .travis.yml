@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+- '5.0'
+- '4.0'
+- '0.12'
+- '0.10'
+script:
+- npm run build
+deploy:
+  provider: npm
+  email: jimwhimpey@me.com
+  api_key:
+    secure: SpqV+z69HVJ7pFCndZxp1DTEUrgRfLelB9TGgkTxVFzMJL+aKE9ZNLt3CgOudoE8yiaaTSOzqY3TxcWtOt0EksWW8ZSWlRVJBtwz/XKRc645iRkhseqb8rAiIOvRMzq567dHQyrtlS4P0kS5rWE12ekBEOvTZiCz/uVoJV9ulkRhhqSEUAwao3WzpDPbURtwyq0lxDyp/kabr5RJVswRimIAePKjER3XqxxWOOgViZUjZe2TDzJyKsXo7Djz8630ooB0HYxhdDif4V6OlpdqNvN5YG9m3ADMpGHZgcjTSofEaTX2PftCgCFvl3tE97/vPr8GUVXcqetNjp8F2ir0e3/lEo1gBbEFNFWd8oVZQe8tUrC/Lv93mh99EFbkG5AhDbiCq4YGVVLsWOoB5soA1zyXwJBopbd9C1jF29lIz3NjQvEwdpfiLDwOa67HZZHYbLOglQRsqWd0aqV8oFikV7pJfQt7Vg05xmttHNjy0i53Bf028GUBbDVwcvzfKAoGs/w5nCVlhQPOiXwltVh5MkrBtwHDLLUUhcJXHCdME2anVgqAmgCxzqaexWNOQ5YmPujTJzn9X3NCX694yWC8TRd5+5CbgWy4Uuk0aw3i2eFGhudfsLdRxVYfTgUTu9sl4PXWZ6+c+k2h6951JWrmBSDYJv3YimWJU1/3xFLxJwk=
+  on:
+    repo: flickr/justified-layout
