@@ -13,7 +13,7 @@
     "url": "https://github.com/flickr/justified-layout/issues",
     "email": "whimpey@yahoo-inc.com"
   },
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "./script/test.sh",
     "coverage": "./script/coverage.sh",

@@ -1,7 +1,7 @@
 // Copyright 2016 Yahoo Inc.
 // Licensed under the terms of the New-BSD license. Please see LICENSE file in the project root for terms.
 
-var justifiedLayout = require('../lib/index');
+var justifiedLayout = require('..');
 var expect = require('expect');
 var fourSquares = require(__dirname + '/fixtures/four-squares');
 var fourSquares400 = require(__dirname + '/fixtures/four-squares-400');

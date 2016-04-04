@@ -7,7 +7,8 @@ babel src --out-dir lib
 
 # Browserify
 echo "Browserifying..."
-browserify -r ./lib/index.js:justified-layout > ./dist/justified-layout.js; uglifyjs ./dist/justified-layout.js -o ./dist/justified-layout.min.js
+browserify -r $npm_package_main:justified-layout > ./dist/justified-layout.js
+uglifyjs ./dist/justified-layout.js -o ./dist/justified-layout.min.js
 
 # Add the license back to the uglified file
 echo "Licensify..."
