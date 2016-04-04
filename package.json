@@ -16,6 +16,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./script/test.sh",
+    "coverage": "./script/coverage.sh",
     "build": "./script/build.sh",
     "watch": "./script/watch.sh"
   },
@@ -29,7 +30,9 @@
     "babel-cli": "^6.6.5",
     "babel-preset-es2015": "^6.3.13",
     "browserify": "~11.1.0",
+    "coveralls": "^2.11.9",
     "expect": "1.14.0",
+    "istanbul": "^0.4.2",
     "mocha": "2.4.5",
     "uglify-js": "2.6.2"
   },
