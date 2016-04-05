@@ -8,6 +8,50 @@ var fourSquares400 = require(__dirname + '/fixtures/four-squares-400');
 
 describe('justified-layout', function() {
 
+	it('should create additional rows if it won\'t fit within contraints', function () {
+
+		var geometry = justifiedLayout([1, 2], {
+			containerWidth: 200,
+			targetRowHeight: 100
+		});
+
+		expect(geometry.boxes[0].top).toEqual(10);
+		expect(geometry.boxes[1].top).toEqual(200);
+
+	});
+
+	it('shouldn\'t add the row if we\'re limiting it with maxNumRows', function () {
+
+		var geometry = justifiedLayout([1, 2, 1], {
+			containerWidth: 200,
+			targetRowHeight: 100,
+			maxNumRows: 2
+		});
+
+		expect(geometry.boxes.length).toEqual(2);
+
+	});
+
+	it('should handle a panorama as only row item', function () {
+
+		var geometry = justifiedLayout([5]);
+		expect(geometry.boxes.length).toEqual(1);
+
+	});
+
+	it('should allow new item added to the row to get closer to the targetRowHeight', function () {
+
+		var geometry = justifiedLayout([1, 4, 1.1], {
+			containerWidth: 1000,
+			targetRowHeight: 250
+		});
+
+		expect(geometry.boxes[0].height).toEqual(194);
+		expect(geometry.boxes[1].height).toEqual(194);
+		expect(geometry.boxes[2].height).toEqual(194);
+
+	});
+
 	describe('input', function() {
 
 		it('should handle width and height objects as input', function() {
@@ -166,13 +210,23 @@ describe('justified-layout', function() {
 
 	});
 
-	describe('orphans', function() {
+	describe('widows', function() {
 
 		it('should set them at the same height as previous rows which looks nicer', function() {
 
 			var geometry = justifiedLayout([1, 1, 1, 1]);
 
 			expect(geometry.boxes[0].height).toEqual(geometry.boxes[3].height);
+
+		});
+
+		it('should set them at the same height as previous non-breakout row', function() {
+
+			var geometry = justifiedLayout([1, 1, 1, 1, 1, 1, 1, 1], {
+				fullWidthBreakoutRowCadence: 3
+			});
+
+			expect(geometry.boxes[geometry.boxes.length-1].height).toEqual(320);
 
 		});
 
