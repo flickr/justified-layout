@@ -42,8 +42,8 @@ var Row = module.exports = function (params) {
 	this.maxAspectRatio = this.width / params.targetRowHeight * (1 + params.targetRowHeightTolerance);
 
 	// Edge case row height minimum/maximum
-	this.edgeCaseMinRowHeight = params.edgeCaseMinRowHeight || Number.NEGATIVE_INFINITY;
-	this.edgeCaseMaxRowHeight = params.edgeCaseMaxRowHeight || Number.POSITIVE_INFINITY;
+	this.edgeCaseMinRowHeight = params.edgeCaseMinRowHeight;
+	this.edgeCaseMaxRowHeight = params.edgeCaseMaxRowHeight;
 
 	// Layout direction
 	this.rightToLeft = params.rightToLeft;
@@ -106,12 +106,6 @@ Row.prototype = {
 					return true;
 				}
 			}
-		}
-
-		if (newAspectRatio === 0) {
-			// Error state (item not added, row layout not complete);
-			// handled by consumer
-			return false;
 		}
 
 		if (newAspectRatio < this.minAspectRatio) {
@@ -194,7 +188,7 @@ Row.prototype = {
 	*/
 	completeLayout: function (newHeight, justify) {
 
-		var itemWidthSum = this.rightToLeft ? -this.left : this.left,
+		var itemWidthSum = this.left,
 		    rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
 		    clampedToNativeRatio,
 		    roundedHeight,
@@ -238,17 +232,10 @@ Row.prototype = {
 			item.width = Math.round(item.aspectRatio * self.height * clampedToNativeRatio);
 			item.height = self.height;
 
-			if (self.rightToLeft) {
-
-				// Right-to-left.
-				item.left = self.width - itemWidthSum - item.width;
-
-			} else {
-
-				// Left-to-right.
-				item.left = itemWidthSum;
-
-			}
+			// Left-to-right.
+			// TODO right to left
+			// item.left = self.width - itemWidthSum - item.width;
+			item.left = itemWidthSum;
 
 			// Incrememnt width.
 			itemWidthSum += item.width + self.spacing;
@@ -259,11 +246,11 @@ Row.prototype = {
 		// caused by rounding width and height across all items.
 		if (justify) {
 
+			// TODO Right to left
 			// Left-to-right increments itemWidthSum differently;
 			// account for that before distributing error.
-			if (!this.rightToLeft) {
-				itemWidthSum -= (this.spacing + this.left);
-			}
+			// if (!this.rightToLeft) {
+			itemWidthSum -= (this.spacing + this.left);
 
 			errorWidthPerItem = (itemWidthSum - this.width) / this.items.length;
 			roundedCumulativeErrors = this.items.map(function (item, i) {
@@ -278,9 +265,10 @@ Row.prototype = {
 				singleItemGeometry.width -= Math.round(errorWidthPerItem);
 
 				// In right-to-left layouts, shift item to account for width change.
-				if (this.rightToLeft) {
-					singleItemGeometry.left += Math.round(errorWidthPerItem);
-				}
+				// TODO Right to left
+				// if (this.rightToLeft) {
+				// 	singleItemGeometry.left += Math.round(errorWidthPerItem);
+				// }
 
 			} else {
 
@@ -315,14 +303,11 @@ Row.prototype = {
 				return sum + item.aspectRatio;
 			}, 0);
 
+		// TODO Handle fitting to width
+
 		if (typeof rowHeight === 'number') {
 
 			this.completeLayout(rowHeight, false);
-
-		} else if (fitToWidth) {
-
-			// Complete using height required to fill row with current items.
-			this.completeLayout(rowWidthWithoutSpacing / currentAspectRatio);
 
 		} else {
 

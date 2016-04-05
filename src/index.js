@@ -80,8 +80,7 @@ module.exports = function (input) {
 */
 function computeLayout(itemLayoutData) {
 
-	var notAddedNotComplete,
-	    laidOutItems = [],
+	var laidOutItems = [],
 	    itemAdded,
 	    currentRow,
 	    nextToLastRowHeight;
@@ -97,8 +96,6 @@ function computeLayout(itemLayoutData) {
 	// Loop through the items
 	itemLayoutData.some(function (itemData, i) {
 
-		notAddedNotComplete = false;
-
 		// If not currently building up a row, make a new one.
 		if (!currentRow) {
 			currentRow = createNewRow();
@@ -111,6 +108,7 @@ function computeLayout(itemLayoutData) {
 
 			// Row is filled; add it and start a new one
 			laidOutItems = laidOutItems.concat(addRow(currentRow));
+
 			if (layoutData._rows.length >= layoutConfig.maxNumRows) {
 				currentRow = null;
 				return true;
@@ -132,16 +130,10 @@ function computeLayout(itemLayoutData) {
 						return true;
 					}
 					currentRow = createNewRow();
-				} else if (!itemAdded) {
-					notAddedNotComplete = true;
 				}
 			}
-		} else {
-
-			if (!itemAdded) {
-				notAddedNotComplete = true;
-			}
 		}
+
 	});
 
 	// Handle any leftover content (orphans) depending on where they lie
@@ -158,7 +150,7 @@ function computeLayout(itemLayoutData) {
 				nextToLastRowHeight = layoutData._rows[layoutData._rows.length - 1].height;
 			}
 
-			currentRow.forceComplete(false, nextToLastRowHeight || layoutConfig.targetRowHeight);
+			currentRow.forceComplete(false, nextToLastRowHeight);
 
 		} else {
 
