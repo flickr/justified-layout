@@ -1,6 +1,6 @@
 {
   "name": "justified-layout",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Pass in box sizes and get back sizes and coordinates for a justified layout",
   "keywords": [
     "justify",
