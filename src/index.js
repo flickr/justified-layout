@@ -62,7 +62,7 @@ module.exports = function (input) {
 
 	// Convert widths and heights to aspect ratios if we need to
 	return computeLayout(input.map(function (item) {
-		if (item.width && item.width) {
+		if (item.width && item.height) {
 			return { aspectRatio: item.width / item.height };
 		} else {
 			return { aspectRatio: item };
@@ -95,6 +95,10 @@ function computeLayout(itemLayoutData) {
 
 	// Loop through the items
 	itemLayoutData.some(function (itemData, i) {
+
+		if (isNaN(itemData.aspectRatio)) {
+			throw new Error("Item " + i + " has an invalid aspect ratio");
+		}
 
 		// If not currently building up a row, make a new one.
 		if (!currentRow) {
@@ -173,6 +177,7 @@ function computeLayout(itemLayoutData) {
 		containerHeight: layoutData._containerHeight,
 		boxes: layoutData._layoutItems
 	};
+
 }
 
 /**
