@@ -74,6 +74,40 @@ describe('justified-layout', function() {
 			expect(justifiedLayout([1, 1, 1, 1])).toEqual(fourSquares);
 		});
 
+		it('should error if box height not passed in', function () {
+
+			try {
+				var geometryOnlyWidths = justifiedLayout([
+					{ width: 10 }
+				]);
+			} catch (e) {
+				expect(e.message, "Item 0 has an invalid aspect ratio");
+			}
+
+		});
+
+		it('should error if box height not passed in', function () {
+
+			try {
+				var geometryOnlyWidths = justifiedLayout([
+					{ height: 10 }
+				]);
+			} catch (e) {
+				expect(e.message, "Item 0 has an invalid aspect ratio");
+			}
+
+		});
+
+		it('should error if aspect ratio isn\'t a number', function () {
+
+			try {
+				var geometryOnlyWidths = justifiedLayout(['NaN']);
+			} catch (e) {
+				expect(e.message, "Item 0 has an invalid aspect ratio");
+			}
+
+		});
+
 	});
 
 	describe('config', function() {
