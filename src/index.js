@@ -59,6 +59,7 @@ module.exports = function (input) {
 	layoutData._containerHeight = layoutConfig.containerPadding.top;
 	layoutData._rows = [];
 	layoutData._orphans = [];
+	layoutConfig._widowCount = 0;
 
 	// Convert widths and heights to aspect ratios if we need to
 	return computeLayout(input.map(function (item) {
@@ -164,6 +165,7 @@ function computeLayout(itemLayoutData) {
 		}
 
 		laidOutItems = laidOutItems.concat(addRow(currentRow));
+		layoutConfig._widowCount = currentRow.getItems().length;
 
 	}
 
@@ -175,6 +177,7 @@ function computeLayout(itemLayoutData) {
 
 	return {
 		containerHeight: layoutData._containerHeight,
+		widowCount: layoutConfig._widowCount,
 		boxes: layoutData._layoutItems
 	};
 

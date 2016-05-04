@@ -264,6 +264,24 @@ describe('justified-layout', function() {
 
 		});
 
+		it('should return 0 value widowCount property if there aren\'t any', function() {
+
+			var geometryNoWidows = justifiedLayout([1, 1, 1]);
+
+			expect(geometryNoWidows.widowCount).toEqual(0);
+
+		});
+
+		it('should return the number of widowCount in widows property if there are widows', function() {
+
+			var geometry1Widow = justifiedLayout([1, 1, 1, 1]);
+			var geometry2Widow = justifiedLayout([1, 1, 1, 1, 0.5]);
+
+			expect(geometry1Widow.widowCount).toEqual(1);
+			expect(geometry2Widow.widowCount).toEqual(2);
+
+		});
+
 	});
 
 	describe('containerPadding', function() {

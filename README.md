@@ -18,6 +18,7 @@ Into this:
 ```js
 {
     "containerHeight": 1269,
+    "widowCount": 0,
     "boxes": [
         {
             "aspectRatio": 0.5,
