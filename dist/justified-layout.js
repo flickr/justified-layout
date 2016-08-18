@@ -22,7 +22,6 @@ var merge = require('merge');
 * @param params.edgeCaseMinRowHeight {Number} Absolute minimum row height for edge cases that cannot be resolved within tolerance.
 * @param params.edgeCaseMaxRowHeight {Number} Absolute maximum row height for edge cases that cannot be resolved within tolerance.
 * @param params.isBreakoutRow {Boolean} Is this row in particular one of those breakout rows? Always false if it's not that kind of photo list
-* @param params.centerAlign {Boolean} Does widow rows must be centered?
 * @constructor
 */
 var Row = module.exports = function (params) {
@@ -51,7 +50,6 @@ var Row = module.exports = function (params) {
 
 	// Layout direction
 	this.rightToLeft = params.rightToLeft;
-	this.centerAlign = params.centerAlign;
 
 	// Full width breakout rows
 	this.isBreakoutRow = params.isBreakoutRow;
@@ -285,12 +283,6 @@ Row.prototype = {
 					}
 				});
 			}
-		} else if (this.centerAlign) {
-			// For widows, set to center if configured
-			var centeringOffset = (this.width - itemWidthSum)/2;
-			this.items.forEach(function (item, i) {
-				item.left += centeringOffset;
-			});
 		}
 	},
 
@@ -544,7 +536,6 @@ module.exports = function (input) {
 		maxNumRows: Number.POSITIVE_INFINITY,
 		forceAspectRatio: false,
 		showWidows: true,
-		centerAlign: false,
 		fullWidthBreakoutRowCadence: false
 	};
 
@@ -720,7 +711,6 @@ function createNewRow() {
 		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
 		edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
 		rightToLeft: false,
-		centerAlign: layoutConfig.centerAlign,
 		isBreakoutRow: isBreakoutRow
 	});
 }
