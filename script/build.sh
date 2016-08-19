@@ -2,8 +2,8 @@
 set -ex
 
 # Eslint
-echo "Eslinting..." > /dev/null
-eslint ./lib
+echo "Eslinting..."
+eslint ./lib ./test
 
 # Browserify
 echo "Browserifying..."
