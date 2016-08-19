@@ -16,7 +16,7 @@
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "./script/test.sh",
+    "test": "mocha",
     "coverage": "./script/coverage.sh",
     "build": "./script/build.sh"
   },
