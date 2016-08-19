@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 set -ex
 
+# Eslint
+echo "Eslinting..." > /dev/null
+eslint ./lib
+
 # Browserify
 echo "Browserifying..."
 browserify -r $npm_package_main:justified-layout > ./dist/justified-layout.js
