@@ -15,7 +15,7 @@
   },
   "main": "./lib/index.js",
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "eslint .",
     "test": "./script/test.sh",
     "coverage": "./script/coverage.sh",
     "build": "./script/build.sh"

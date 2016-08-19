@@ -3,7 +3,7 @@ set -ex
 
 # Eslint
 echo "Eslinting..."
-eslint ./lib ./test
+npm run lint
 
 # Browserify
 echo "Browserifying..."
