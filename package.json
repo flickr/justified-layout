@@ -9,6 +9,11 @@
     "layout",
     "boxes"
   ],
+  "files": [
+    "demo.html",
+    "dist",
+    "lib"
+  ],
   "bugs": {
     "url": "https://github.com/flickr/justified-layout/issues",
     "email": "flickr-open-source@yahoo-inc.com"
@@ -18,7 +23,8 @@
     "lint": "eslint .",
     "test": "mocha",
     "coverage": "./script/coverage.sh",
-    "build": "./script/build.sh"
+    "build": "./script/build.sh",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
