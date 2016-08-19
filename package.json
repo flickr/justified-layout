@@ -21,9 +21,11 @@
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha",
-    "coverage": "./script/coverage.sh",
-    "build": "./script/build.sh",
+    "test": "istanbul test _mocha",
+    "build": "npm run build-dist && npm run build-min",
+    "build-dist": "mkdir -p dist && browserify -r $npm_package_main:justified-layout > dist/justified-layout.js",
+    "build-min": "uglifyjs dist/justified-layout.js --comments -o dist/justified-layout.min.js",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -36,7 +38,7 @@
     "browserify": "~11.1.0",
     "coveralls": "^2.11.9",
     "eslint": "^2.13.1",
-    "eslint-config-flickr": "^1.1.7",
+    "eslint-config-flickr": "~1.1.8",
     "expect": "1.14.0",
     "istanbul": "^0.4.2",
     "mocha": "2.4.5",
