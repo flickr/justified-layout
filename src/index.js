@@ -4,72 +4,59 @@
 'use strict';
 
 var merge = require('merge'),
-    Row = require('./row'),
-    layoutConfig = {},
-    layoutData = {},
-    currentRow = false;
+	Row = require('./row'),
+	layoutConfig = {},
+	layoutData = {};
 
 /**
-* Takes in a bunch of box data and config. Returns
-* geometry to lay them out in a justified view.
+* Create a new, empty row.
 *
-* @method covertSizesToAspectRatios
-* @param sizes {Array} Array of objects with widths and heights
-* @return {Array} A list of aspect ratios
-**/
-module.exports = function (input) {
-	var config = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+* @method createNewRow
+* @return A new, empty row of the type specified by this layout.
+*/
+function createNewRow() {
 
-	// Defaults
-	var defaults = {
-		containerWidth: 1060,
-		containerPadding: 10,
-		boxSpacing: 10,
-		targetRowHeight: 320,
-		targetRowHeightTolerance: 0.25,
-		maxNumRows: Number.POSITIVE_INFINITY,
-		forceAspectRatio: false,
-		showWidows: true,
-		fullWidthBreakoutRowCadence: false
-	};
+	var isBreakoutRow;
 
-	// Merge defaults and config passed in
-	layoutConfig = merge(defaults, config);
-
-	// Sort out padding and spacing values
-	var containerPadding = {};
-	var boxSpacing = {};
-
-	containerPadding.top = (!isNaN(parseFloat(layoutConfig.containerPadding.top))) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
-	containerPadding.right = (!isNaN(parseFloat(layoutConfig.containerPadding.right))) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
-	containerPadding.bottom = (!isNaN(parseFloat(layoutConfig.containerPadding.bottom))) ? layoutConfig.containerPadding.bottom : layoutConfig.containerPadding;
-	containerPadding.left = (!isNaN(parseFloat(layoutConfig.containerPadding.left))) ? layoutConfig.containerPadding.left : layoutConfig.containerPadding;
-	boxSpacing.horizontal = (!isNaN(parseFloat(layoutConfig.boxSpacing.horizontal))) ? layoutConfig.boxSpacing.horizontal : layoutConfig.boxSpacing;
-	boxSpacing.vertical = (!isNaN(parseFloat(layoutConfig.boxSpacing.vertical))) ? layoutConfig.boxSpacing.vertical : layoutConfig.boxSpacing;
-
-	layoutConfig.containerPadding = containerPadding;
-	layoutConfig.boxSpacing = boxSpacing;
-
-	// Local
-	layoutData._layoutItems = [];
-	layoutData._awakeItems = [];
-	layoutData._inViewportItems = [];
-	layoutData._leadingOrphans = [];
-	layoutData._trailingOrphans = [];
-	layoutData._containerHeight = layoutConfig.containerPadding.top;
-	layoutData._rows = [];
-	layoutData._orphans = [];
-	layoutConfig._widowCount = 0;
-
-	// Convert widths and heights to aspect ratios if we need to
-	return computeLayout(input.map(function (item) {
-		if (item.width && item.height) {
-			return { aspectRatio: item.width / item.height };
-		} else {
-			return { aspectRatio: item };
+	// Work out if this is a full width breakout row
+	if (layoutConfig.fullWidthBreakoutRowCadence !== false) {
+		if (((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence) === 0) {
+			isBreakoutRow = true;
 		}
-	}));
-};
+	}
+
+	return new Row({
+		top: layoutData._containerHeight,
+		left: layoutConfig.containerPadding.left,
+		width: layoutConfig.containerWidth - layoutConfig.containerPadding.left - layoutConfig.containerPadding.right,
+		spacing: layoutConfig.boxSpacing.horizontal,
+		targetRowHeight: layoutConfig.targetRowHeight,
+		targetRowHeightTolerance: layoutConfig.targetRowHeightTolerance,
+		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
+		edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
+		rightToLeft: false,
+		isBreakoutRow: isBreakoutRow
+	});
+}
+
+/**
+ * Add a completed row to the layout.
+ * Note: the row must have already been completed.
+ *
+ * @method addRow
+ * @param row {Row} The row to add.
+ * @return {Array} Each item added to the row.
+ */
+function addRow(row) {
+
+	layoutData._rows.push(row);
+	layoutData._layoutItems = layoutData._layoutItems.concat(row.getItems());
+
+	// Increment the container height
+	layoutData._containerHeight += row.height + layoutConfig.boxSpacing.vertical;
+
+	return row.items;
+}
 
 /**
 * Calculate the current layout for all items in the list that require layout.
@@ -82,9 +69,9 @@ module.exports = function (input) {
 function computeLayout(itemLayoutData) {
 
 	var laidOutItems = [],
-	    itemAdded,
-	    currentRow,
-	    nextToLastRowHeight;
+		itemAdded,
+		currentRow,
+		nextToLastRowHeight;
 
 	// Apply forced aspect ratio if specified, and set a flag.
 	if (layoutConfig.forceAspectRatio) {
@@ -184,49 +171,63 @@ function computeLayout(itemLayoutData) {
 }
 
 /**
-* Create a new, empty row.
+* Takes in a bunch of box data and config. Returns
+* geometry to lay them out in a justified view.
 *
-* @method createNewRow
-* @return A new, empty row of the type specified by this layout.
-*/
-function createNewRow() {
+* @method covertSizesToAspectRatios
+* @param sizes {Array} Array of objects with widths and heights
+* @return {Array} A list of aspect ratios
+**/
+module.exports = function (input) {
+	var config = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-	// Work out if this is a full width breakout row
-	if (layoutConfig.fullWidthBreakoutRowCadence !== false) {
-		if (((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence) === 0) {
-			var isBreakoutRow = true;
+	// Defaults
+	var defaults = {
+		containerWidth: 1060,
+		containerPadding: 10,
+		boxSpacing: 10,
+		targetRowHeight: 320,
+		targetRowHeightTolerance: 0.25,
+		maxNumRows: Number.POSITIVE_INFINITY,
+		forceAspectRatio: false,
+		showWidows: true,
+		fullWidthBreakoutRowCadence: false
+	};
+
+	var containerPadding = {};
+	var boxSpacing = {};
+
+	// Merge defaults and config passed in
+	layoutConfig = merge(defaults, config);
+
+	// Sort out padding and spacing values
+	containerPadding.top = (!isNaN(parseFloat(layoutConfig.containerPadding.top))) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
+	containerPadding.right = (!isNaN(parseFloat(layoutConfig.containerPadding.right))) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
+	containerPadding.bottom = (!isNaN(parseFloat(layoutConfig.containerPadding.bottom))) ? layoutConfig.containerPadding.bottom : layoutConfig.containerPadding;
+	containerPadding.left = (!isNaN(parseFloat(layoutConfig.containerPadding.left))) ? layoutConfig.containerPadding.left : layoutConfig.containerPadding;
+	boxSpacing.horizontal = (!isNaN(parseFloat(layoutConfig.boxSpacing.horizontal))) ? layoutConfig.boxSpacing.horizontal : layoutConfig.boxSpacing;
+	boxSpacing.vertical = (!isNaN(parseFloat(layoutConfig.boxSpacing.vertical))) ? layoutConfig.boxSpacing.vertical : layoutConfig.boxSpacing;
+
+	layoutConfig.containerPadding = containerPadding;
+	layoutConfig.boxSpacing = boxSpacing;
+
+	// Local
+	layoutData._layoutItems = [];
+	layoutData._awakeItems = [];
+	layoutData._inViewportItems = [];
+	layoutData._leadingOrphans = [];
+	layoutData._trailingOrphans = [];
+	layoutData._containerHeight = layoutConfig.containerPadding.top;
+	layoutData._rows = [];
+	layoutData._orphans = [];
+	layoutConfig._widowCount = 0;
+
+	// Convert widths and heights to aspect ratios if we need to
+	return computeLayout(input.map(function (item) {
+		if (item.width && item.height) {
+			return { aspectRatio: item.width / item.height };
+		} else {
+			return { aspectRatio: item };
 		}
-	}
-
-	return new Row({
-		top: layoutData._containerHeight,
-		left: layoutConfig.containerPadding.left,
-		width: layoutConfig.containerWidth - layoutConfig.containerPadding.left - layoutConfig.containerPadding.right,
-		spacing: layoutConfig.boxSpacing.horizontal,
-		targetRowHeight: layoutConfig.targetRowHeight,
-		targetRowHeightTolerance: layoutConfig.targetRowHeightTolerance,
-		edgeCaseMinRowHeight: 0.5 * layoutConfig.targetRowHeight,
-		edgeCaseMaxRowHeight: 2 * layoutConfig.targetRowHeight,
-		rightToLeft: false,
-		isBreakoutRow: isBreakoutRow
-	});
-}
-
-/**
- * Add a completed row to the layout.
- * Note: the row must have already been completed.
- *
- * @method addRow
- * @param row {Row} The row to add.
- * @return {Array} Each item added to the row.
- */
-function addRow(row) {
-
-	layoutData._rows.push(row);
-	layoutData._layoutItems = layoutData._layoutItems.concat(row.getItems());
-
-	// Increment the container height
-	layoutData._containerHeight += row.height + layoutConfig.boxSpacing.vertical;
-
-	return row.items;
-}
+	}));
+};

@@ -9,7 +9,7 @@ var merge = require('merge');
 * Stores relevant values and provides methods for calculating layout of individual rows.
 *
 * @param {Object} layoutConfig - The same as that passed
-* @param {Object} Initialization paramters. The following are all required:
+* @param {Object} Initialization parameters. The following are all required:
 * @param params.top {Number} Top of row, relative to container
 * @param params.left {Number} Left side of row relative to container (equal to container left padding)
 * @param params.width {Number} Width of row, not including container padding
@@ -84,15 +84,15 @@ Row.prototype = {
 	addItem: function (itemData) {
 
 		var newItems = this.items.concat(itemData),
-		    // Calculate aspect ratios for items only; exclude spacing
-		    rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
+			// Calculate aspect ratios for items only; exclude spacing
+			rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
 			newAspectRatio = newItems.reduce(function (sum, item) {
 				return sum + item.aspectRatio;
 			}, 0),
 			targetAspectRatio = rowWidthWithoutSpacing / this.targetRowHeight,
-		    previousRowWidthWithoutSpacing,
-		    previousAspectRatio,
-		    previousTargetAspectRatio;
+			previousRowWidthWithoutSpacing,
+			previousAspectRatio,
+			previousTargetAspectRatio;
 
 		// Handle big full-width breakout photos if we're doing them
 		if (this.isBreakoutRow) {
@@ -189,14 +189,14 @@ Row.prototype = {
 	completeLayout: function (newHeight, justify) {
 
 		var itemWidthSum = this.left,
-		    rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
-		    clampedToNativeRatio,
-		    roundedHeight,
-		    clampedHeight,
-		    errorWidthPerItem,
-		    roundedCumulativeErrors,
-		    singleItemGeometry,
-		    self = this;
+			rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
+			clampedToNativeRatio,
+			roundedHeight,
+			clampedHeight,
+			errorWidthPerItem,
+			roundedCumulativeErrors,
+			singleItemGeometry,
+			self = this;
 
 		// Justify unless explicitly specified otherwise.
 		if (typeof justify === 'undefined') {
@@ -226,7 +226,7 @@ Row.prototype = {
 		}
 
 		// Compute item geometry based on newHeight.
-		this.items.forEach(function (item, i) {
+		this.items.forEach(function (item) {
 
 			item.top = self.top;
 			item.width = Math.round(item.aspectRatio * self.height * clampedToNativeRatio);
@@ -237,7 +237,7 @@ Row.prototype = {
 			// item.left = self.width - itemWidthSum - item.width;
 			item.left = itemWidthSum;
 
-			// Incrememnt width.
+			// Increment width.
 			itemWidthSum += item.width + self.spacing;
 
 		});
@@ -298,12 +298,11 @@ Row.prototype = {
 	*/
 	forceComplete: function (fitToWidth, rowHeight) {
 
-		var rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
-			currentAspectRatio = this.items.reduce(function (sum, item) {
-				return sum + item.aspectRatio;
-			}, 0);
-
 		// TODO Handle fitting to width
+		// var rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
+		// 	currentAspectRatio = this.items.reduce(function (sum, item) {
+		// 		return sum + item.aspectRatio;
+		// 	}, 0);
 
 		if (typeof rowHeight === 'number') {
 
