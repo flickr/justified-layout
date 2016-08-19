@@ -21,9 +21,9 @@
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "mocha",
-    "coverage": "./script/coverage.sh",
+    "test": "istanbul test _mocha",
     "build": "./script/build.sh",
+    "coverage": "cat ./coverage/lcov.info | coveralls",
     "prepublish": "npm run build"
   },
   "repository": {
