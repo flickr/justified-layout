@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -ex
 
-# Babelify
-echo "Babelifying..."
-babel src --out-dir lib
-
 # Browserify
 echo "Browserifying..."
 browserify -r $npm_package_main:justified-layout > ./dist/justified-layout.js

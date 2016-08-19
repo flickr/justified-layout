@@ -1,6 +1,4 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-'use strict';
-
 // Copyright 2016 Yahoo Inc.
 // Licensed under the terms of the MIT license. Please see LICENSE file in the project root for terms.
 
@@ -59,43 +57,43 @@ var Row = module.exports = function (params) {
 
 	// Height remains at 0 until it's been calculated
 	this.height = 0;
+
 };
 
 Row.prototype = {
 
 	/**
- * Attempt to add a single item to the row.
- * This is the heart of the justified algorithm.
- * This method is direction-agnostic; it deals only with sizes, not positions.
- *
- * If the item fits in the row, without pushing row height beyond min/max tolerance,
- * the item is added and the method returns true.
- *
- * If the item leaves row height too high, there may be room to scale it down and add another item.
- * In this case, the item is added and the method returns true, but the row is incomplete.
- *
- * If the item leaves row height too short, there are too many items to fit within tolerance.
- * The method will either accept or reject the new item, favoring the resulting row height closest to within tolerance.
- * If the item is rejected, left/right padding will be required to fit the row height within tolerance;
- * if the item is accepted, top/bottom cropping will be required to fit the row height within tolerance.
- *
- * @method addItem
- * @param itemData {Object} Item layout data, containing item aspect ratio.
- * @return {Boolean} True if successfully added; false if rejected.
- */
-	addItem: function addItem(itemData) {
+	* Attempt to add a single item to the row.
+	* This is the heart of the justified algorithm.
+	* This method is direction-agnostic; it deals only with sizes, not positions.
+	*
+	* If the item fits in the row, without pushing row height beyond min/max tolerance,
+	* the item is added and the method returns true.
+	*
+	* If the item leaves row height too high, there may be room to scale it down and add another item.
+	* In this case, the item is added and the method returns true, but the row is incomplete.
+	*
+	* If the item leaves row height too short, there are too many items to fit within tolerance.
+	* The method will either accept or reject the new item, favoring the resulting row height closest to within tolerance.
+	* If the item is rejected, left/right padding will be required to fit the row height within tolerance;
+	* if the item is accepted, top/bottom cropping will be required to fit the row height within tolerance.
+	*
+	* @method addItem
+	* @param itemData {Object} Item layout data, containing item aspect ratio.
+	* @return {Boolean} True if successfully added; false if rejected.
+	*/
+	addItem: function (itemData) {
 
 		var newItems = this.items.concat(itemData),
-
-		// Calculate aspect ratios for items only; exclude spacing
-		rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
-		    newAspectRatio = newItems.reduce(function (sum, item) {
-			return sum + item.aspectRatio;
-		}, 0),
-		    targetAspectRatio = rowWidthWithoutSpacing / this.targetRowHeight,
-		    previousRowWidthWithoutSpacing,
-		    previousAspectRatio,
-		    previousTargetAspectRatio;
+			// Calculate aspect ratios for items only; exclude spacing
+			rowWidthWithoutSpacing = this.width - (newItems.length - 1) * this.spacing,
+			newAspectRatio = newItems.reduce(function (sum, item) {
+				return sum + item.aspectRatio;
+			}, 0),
+			targetAspectRatio = rowWidthWithoutSpacing / this.targetRowHeight,
+			previousRowWidthWithoutSpacing,
+			previousAspectRatio,
+			previousTargetAspectRatio;
 
 		// Handle big full-width breakout photos if we're doing them
 		if (this.isBreakoutRow) {
@@ -118,6 +116,7 @@ Row.prototype = {
 
 			this.items.push(merge(itemData));
 			return true;
+
 		} else if (newAspectRatio > this.maxAspectRatio) {
 
 			// New aspect ratio is too wide / scaled row height will be too short.
@@ -131,6 +130,7 @@ Row.prototype = {
 				this.items.push(merge(itemData));
 				this.completeLayout(rowWidthWithoutSpacing / newAspectRatio);
 				return true;
+
 			}
 
 			// Calculate width/aspect ratio for row before adding new item
@@ -145,6 +145,7 @@ Row.prototype = {
 				// Row with new item is us farther away from target than row without; complete layout and reject item.
 				this.completeLayout(previousRowWidthWithoutSpacing / previousAspectRatio);
 				return false;
+
 			} else {
 
 				// Row with new item is us closer to target than row without;
@@ -152,7 +153,9 @@ Row.prototype = {
 				this.items.push(merge(itemData));
 				this.completeLayout(rowWidthWithoutSpacing / newAspectRatio);
 				return true;
+
 			}
+
 		} else {
 
 			// New aspect ratio / scaled row height is within tolerance;
@@ -160,38 +163,41 @@ Row.prototype = {
 			this.items.push(merge(itemData));
 			this.completeLayout(rowWidthWithoutSpacing / newAspectRatio);
 			return true;
+
 		}
+
 	},
 
 	/**
- * Check if a row has completed its layout.
- *
- * @method isLayoutComplete
- * @return {Boolean} True if complete; false if not.
- */
-	isLayoutComplete: function isLayoutComplete() {
+	* Check if a row has completed its layout.
+	*
+	* @method isLayoutComplete
+	* @return {Boolean} True if complete; false if not.
+	*/
+	isLayoutComplete: function () {
 		return this.height > 0;
 	},
 
+
 	/**
- * Set row height and compute item geometry from that height.
- * Will justify items within the row unless instructed not to.
- *
- * @method completeLayout
- * @param newHeight {Number} Set row height to this value.
- * @param justify Apply error correction to ensure photos exactly fill the row. Defaults to `true`.
- */
-	completeLayout: function completeLayout(newHeight, justify) {
+	* Set row height and compute item geometry from that height.
+	* Will justify items within the row unless instructed not to.
+	*
+	* @method completeLayout
+	* @param newHeight {Number} Set row height to this value.
+	* @param justify Apply error correction to ensure photos exactly fill the row. Defaults to `true`.
+	*/
+	completeLayout: function (newHeight, justify) {
 
 		var itemWidthSum = this.left,
-		    rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
-		    clampedToNativeRatio,
-		    roundedHeight,
-		    clampedHeight,
-		    errorWidthPerItem,
-		    roundedCumulativeErrors,
-		    singleItemGeometry,
-		    self = this;
+			rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
+			clampedToNativeRatio,
+			roundedHeight,
+			clampedHeight,
+			errorWidthPerItem,
+			roundedCumulativeErrors,
+			singleItemGeometry,
+			self = this;
 
 		// Justify unless explicitly specified otherwise.
 		if (typeof justify === 'undefined') {
@@ -210,12 +216,14 @@ Row.prototype = {
 			// so force it to fit the width (recalculate aspectRatio to match clamped height).
 			// NOTE: this will result in cropping/padding commensurate to the amount of clamping.
 			this.height = clampedHeight;
-			clampedToNativeRatio = rowWidthWithoutSpacing / clampedHeight / (rowWidthWithoutSpacing / roundedHeight);
+			clampedToNativeRatio = (rowWidthWithoutSpacing / clampedHeight) / (rowWidthWithoutSpacing / roundedHeight);
+
 		} else {
 
 			// If not clamped, leave ratio at 1.0.
 			this.height = roundedHeight;
 			clampedToNativeRatio = 1.0;
+
 		}
 
 		// Compute item geometry based on newHeight.
@@ -232,6 +240,7 @@ Row.prototype = {
 
 			// Increment width.
 			itemWidthSum += item.width + self.spacing;
+
 		});
 
 		// If specified, ensure items fill row and distribute error
@@ -242,12 +251,13 @@ Row.prototype = {
 			// Left-to-right increments itemWidthSum differently;
 			// account for that before distributing error.
 			// if (!this.rightToLeft) {
-			itemWidthSum -= this.spacing + this.left;
+			itemWidthSum -= (this.spacing + this.left);
 
 			errorWidthPerItem = (itemWidthSum - this.width) / this.items.length;
 			roundedCumulativeErrors = this.items.map(function (item, i) {
 				return Math.round((i + 1) * errorWidthPerItem);
 			});
+
 
 			if (this.items.length === 1) {
 
@@ -260,6 +270,7 @@ Row.prototype = {
 				// if (this.rightToLeft) {
 				// 	singleItemGeometry.left += Math.round(errorWidthPerItem);
 				// }
+
 			} else {
 
 				// For rows with multiple items, adjust item width and shift items to fill the row,
@@ -267,24 +278,26 @@ Row.prototype = {
 				this.items.forEach(function (item, i) {
 					if (i > 0) {
 						item.left -= roundedCumulativeErrors[i - 1];
-						item.width -= roundedCumulativeErrors[i] - roundedCumulativeErrors[i - 1];
+						item.width -= (roundedCumulativeErrors[i] - roundedCumulativeErrors[i - 1]);
 					} else {
 						item.width -= roundedCumulativeErrors[i];
 					}
 				});
+
 			}
 		}
+
 	},
 
 	/**
- * Force completion of row layout with current items.
- *
- * @method forceComplete
- * @param fitToWidth {Boolean} Stretch current items to fill the row width.
- *                             This will likely result in padding.
- * @param fitToWidth {Number}
- */
-	forceComplete: function forceComplete(fitToWidth, rowHeight) {
+	* Force completion of row layout with current items.
+	*
+	* @method forceComplete
+	* @param fitToWidth {Boolean} Stretch current items to fill the row width.
+	*                             This will likely result in padding.
+	* @param fitToWidth {Number}
+	*/
+	forceComplete: function (fitToWidth, rowHeight) {
 
 		// TODO Handle fitting to width
 		// var rowWidthWithoutSpacing = this.width - (this.items.length - 1) * this.spacing,
@@ -295,25 +308,28 @@ Row.prototype = {
 		if (typeof rowHeight === 'number') {
 
 			this.completeLayout(rowHeight, false);
+
 		} else {
 
 			// Complete using target row height.
 			this.completeLayout(this.targetRowHeight, false);
 		}
+
 	},
 
 	/**
- * Return layout data for items within row.
- * Note: returns actual list, not a copy.
- *
- * @method getItems
- * @return Layout data for items within row.
- */
-	getItems: function getItems() {
+	* Return layout data for items within row.
+	* Note: returns actual list, not a copy.
+	*
+	* @method getItems
+	* @return Layout data for items within row.
+	*/
+	getItems: function () {
 		return this.items;
 	}
 
 };
+
 },{"merge":2}],2:[function(require,module,exports){
 /*!
  * @name JavaScript/NodeJS Merge v1.2.0
@@ -497,9 +513,9 @@ Row.prototype = {
 'use strict';
 
 var merge = require('merge'),
-    Row = require('./row'),
-    layoutConfig = {},
-    layoutData = {};
+	Row = require('./row'),
+	layoutConfig = {},
+	layoutData = {};
 
 /**
 * Create a new, empty row.
@@ -513,7 +529,7 @@ function createNewRow() {
 
 	// Work out if this is a full width breakout row
 	if (layoutConfig.fullWidthBreakoutRowCadence !== false) {
-		if ((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence === 0) {
+		if (((layoutData._rows.length + 1) % layoutConfig.fullWidthBreakoutRowCadence) === 0) {
 			isBreakoutRow = true;
 		}
 	}
@@ -562,9 +578,9 @@ function addRow(row) {
 function computeLayout(itemLayoutData) {
 
 	var laidOutItems = [],
-	    itemAdded,
-	    currentRow,
-	    nextToLastRowHeight;
+		itemAdded,
+		currentRow,
+		nextToLastRowHeight;
 
 	// Apply forced aspect ratio if specified, and set a flag.
 	if (layoutConfig.forceAspectRatio) {
@@ -618,6 +634,7 @@ function computeLayout(itemLayoutData) {
 				}
 			}
 		}
+
 	});
 
 	// Handle any leftover content (orphans) depending on where they lie
@@ -635,14 +652,17 @@ function computeLayout(itemLayoutData) {
 			}
 
 			currentRow.forceComplete(false, nextToLastRowHeight);
+
 		} else {
 
 			// ...else use target height if there is no other row height to reference.
 			currentRow.forceComplete(false);
+
 		}
 
 		laidOutItems = laidOutItems.concat(addRow(currentRow));
 		layoutConfig._widowCount = currentRow.getItems().length;
+
 	}
 
 	// We need to clean up the bottom container padding
@@ -656,6 +676,7 @@ function computeLayout(itemLayoutData) {
 		widowCount: layoutConfig._widowCount,
 		boxes: layoutData._layoutItems
 	};
+
 }
 
 /**
@@ -689,12 +710,12 @@ module.exports = function (input) {
 	layoutConfig = merge(defaults, config);
 
 	// Sort out padding and spacing values
-	containerPadding.top = !isNaN(parseFloat(layoutConfig.containerPadding.top)) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
-	containerPadding.right = !isNaN(parseFloat(layoutConfig.containerPadding.right)) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
-	containerPadding.bottom = !isNaN(parseFloat(layoutConfig.containerPadding.bottom)) ? layoutConfig.containerPadding.bottom : layoutConfig.containerPadding;
-	containerPadding.left = !isNaN(parseFloat(layoutConfig.containerPadding.left)) ? layoutConfig.containerPadding.left : layoutConfig.containerPadding;
-	boxSpacing.horizontal = !isNaN(parseFloat(layoutConfig.boxSpacing.horizontal)) ? layoutConfig.boxSpacing.horizontal : layoutConfig.boxSpacing;
-	boxSpacing.vertical = !isNaN(parseFloat(layoutConfig.boxSpacing.vertical)) ? layoutConfig.boxSpacing.vertical : layoutConfig.boxSpacing;
+	containerPadding.top = (!isNaN(parseFloat(layoutConfig.containerPadding.top))) ? layoutConfig.containerPadding.top : layoutConfig.containerPadding;
+	containerPadding.right = (!isNaN(parseFloat(layoutConfig.containerPadding.right))) ? layoutConfig.containerPadding.right : layoutConfig.containerPadding;
+	containerPadding.bottom = (!isNaN(parseFloat(layoutConfig.containerPadding.bottom))) ? layoutConfig.containerPadding.bottom : layoutConfig.containerPadding;
+	containerPadding.left = (!isNaN(parseFloat(layoutConfig.containerPadding.left))) ? layoutConfig.containerPadding.left : layoutConfig.containerPadding;
+	boxSpacing.horizontal = (!isNaN(parseFloat(layoutConfig.boxSpacing.horizontal))) ? layoutConfig.boxSpacing.horizontal : layoutConfig.boxSpacing;
+	boxSpacing.vertical = (!isNaN(parseFloat(layoutConfig.boxSpacing.vertical))) ? layoutConfig.boxSpacing.vertical : layoutConfig.boxSpacing;
 
 	layoutConfig.containerPadding = containerPadding;
 	layoutConfig.boxSpacing = boxSpacing;
@@ -719,4 +740,5 @@ module.exports = function (input) {
 		}
 	}));
 };
+
 },{"./row":1,"merge":2}]},{},[]);
