@@ -687,8 +687,7 @@ function computeLayout(itemLayoutData) {
 * @param sizes {Array} Array of objects with widths and heights
 * @return {Array} A list of aspect ratios
 **/
-module.exports = function (input) {
-	var config = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+module.exports = function (input, config) {
 
 	// Defaults
 	var defaults = {
@@ -705,6 +704,8 @@ module.exports = function (input) {
 
 	var containerPadding = {};
 	var boxSpacing = {};
+
+	config = config || {};
 
 	// Merge defaults and config passed in
 	layoutConfig = merge(defaults, config);
