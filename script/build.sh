@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -ex
 
-# Babelify
-echo "Babelifying..."
-babel src --out-dir lib
+# Eslint
+echo "Eslinting..."
+eslint ./lib ./test
 
 # Browserify
 echo "Browserifying..."

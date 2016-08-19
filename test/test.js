@@ -1,14 +1,16 @@
 // Copyright 2016 Yahoo Inc.
 // Licensed under the terms of the New-BSD license. Please see LICENSE file in the project root for terms.
 
+/* eslint-env mocha */
+
 var justifiedLayout = require('..');
 var expect = require('expect');
 var fourSquares = require(__dirname + '/fixtures/four-squares');
 var fourSquares400 = require(__dirname + '/fixtures/four-squares-400');
 
-describe('justified-layout', function() {
+describe('justified-layout', function () {
 
-	it('should create additional rows if it won\'t fit within contraints', function () {
+	it('should create additional rows if it won\'t fit within constraints', function () {
 
 		var geometry = justifiedLayout([1, 2], {
 			containerWidth: 200,
@@ -20,7 +22,7 @@ describe('justified-layout', function() {
 
 	});
 
-	it('shouldn\'t add the row if we\'re limiting it with maxNumRows', function () {
+	it('should not add the row if we are limiting it with maxNumRows', function () {
 
 		var geometry = justifiedLayout([1, 2, 1], {
 			containerWidth: 200,
@@ -35,6 +37,7 @@ describe('justified-layout', function() {
 	it('should handle a panorama as only row item', function () {
 
 		var geometry = justifiedLayout([5]);
+
 		expect(geometry.boxes.length).toEqual(1);
 
 	});
@@ -52,9 +55,9 @@ describe('justified-layout', function() {
 
 	});
 
-	describe('input', function() {
+	describe('input', function () {
 
-		it('should handle width and height objects as input', function() {
+		it('should handle width and height objects as input', function () {
 			expect(justifiedLayout([{
 				width: 400,
 				height: 400
@@ -70,14 +73,14 @@ describe('justified-layout', function() {
 			}])).toEqual(fourSquares);
 		});
 
-		it('should handle an array of aspect ratios as input', function() {
+		it('should handle an array of aspect ratios as input', function () {
 			expect(justifiedLayout([1, 1, 1, 1])).toEqual(fourSquares);
 		});
 
 		it('should error if box height not passed in', function () {
 
 			try {
-				var geometryOnlyWidths = justifiedLayout([
+				justifiedLayout([
 					{ width: 10 }
 				]);
 			} catch (e) {
@@ -89,7 +92,7 @@ describe('justified-layout', function() {
 		it('should error if box height not passed in', function () {
 
 			try {
-				var geometryOnlyWidths = justifiedLayout([
+				justifiedLayout([
 					{ height: 10 }
 				]);
 			} catch (e) {
@@ -98,10 +101,10 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should error if aspect ratio isn\'t a number', function () {
+		it('should error if aspect ratio is not a number', function () {
 
 			try {
-				var geometryOnlyWidths = justifiedLayout(['NaN']);
+				justifiedLayout(['NaN']);
 			} catch (e) {
 				expect(e.message, "Item 0 has an invalid aspect ratio");
 			}
@@ -110,19 +113,19 @@ describe('justified-layout', function() {
 
 	});
 
-	describe('config', function() {
+	describe('config', function () {
 
-		it('should return a layout without passing in a config', function() {
+		it('should return a layout without passing in a config', function () {
 			expect(justifiedLayout([1, 1, 1, 1])).toEqual(fourSquares);
 		});
 
-		it('should allow overriding of containerWidth', function() {
+		it('should allow overriding of containerWidth', function () {
 			expect(justifiedLayout([1, 1, 1, 1], {
 				containerWidth: 400
 			})).toEqual(fourSquares400);
 		});
 
-		it('should allow overriding of containerPadding', function() {
+		it('should allow overriding of containerPadding', function () {
 
 			var geometry = justifiedLayout([1], {
 				containerPadding: 20
@@ -133,7 +136,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of containerPadding with multiple dimensions', function() {
+		it('should allow overriding of containerPadding with multiple dimensions', function () {
 
 			var geometry = justifiedLayout([1], {
 				containerPadding: {
@@ -149,7 +152,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of boxSpacing', function() {
+		it('should allow overriding of boxSpacing', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				boxSpacing: 40
@@ -161,7 +164,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of boxSpacing with multiple dimensions', function() {
+		it('should allow overriding of boxSpacing with multiple dimensions', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				boxSpacing: {
@@ -177,7 +180,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of targetRowHeight', function() {
+		it('should allow overriding of targetRowHeight', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				targetRowHeight: 255,
@@ -188,7 +191,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of targetRowHeightTolerance', function() {
+		it('should allow overriding of targetRowHeightTolerance', function () {
 
 			var geometry = justifiedLayout([1, 1, 1], {
 				targetRowHeightTolerance: 0
@@ -198,7 +201,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of maxNumRows', function() {
+		it('should allow overriding of maxNumRows', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1, 1], {
 				maxNumRows: 1
@@ -208,7 +211,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of forceAspectRatio', function() {
+		it('should allow overriding of forceAspectRatio', function () {
 
 			var geometry = justifiedLayout([2, 2, 2, 2], {
 				forceAspectRatio: 1
@@ -220,7 +223,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of showWidows', function() {
+		it('should allow overriding of showWidows', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1], {
 				showWidows: false
@@ -230,7 +233,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should allow overriding of fullWidthBreakoutRowCadence', function() {
+		it('should allow overriding of fullWidthBreakoutRowCadence', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1, 2, 2, 2, 2], {
 				fullWidthBreakoutRowCadence: 3
@@ -244,9 +247,9 @@ describe('justified-layout', function() {
 
 	});
 
-	describe('widows', function() {
+	describe('widows', function () {
 
-		it('should set them at the same height as previous rows which looks nicer', function() {
+		it('should set them at the same height as previous rows which looks nicer', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1]);
 
@@ -254,17 +257,17 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should set them at the same height as previous non-breakout row', function() {
+		it('should set them at the same height as previous non-breakout row', function () {
 
 			var geometry = justifiedLayout([1, 1, 1, 1, 1, 1, 1, 1], {
 				fullWidthBreakoutRowCadence: 3
 			});
 
-			expect(geometry.boxes[geometry.boxes.length-1].height).toEqual(320);
+			expect(geometry.boxes[geometry.boxes.length - 1].height).toEqual(320);
 
 		});
 
-		it('should return 0 value widowCount property if there aren\'t any', function() {
+		it('should return 0 value widowCount property if there are not any', function () {
 
 			var geometryNoWidows = justifiedLayout([1, 1, 1]);
 
@@ -272,7 +275,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should return the number of widowCount in widows property if there are widows', function() {
+		it('should return the number of widowCount in widows property if there are widows', function () {
 
 			var geometry1Widow = justifiedLayout([1, 1, 1, 1]);
 			var geometry2Widow = justifiedLayout([1, 1, 1, 1, 0.5]);
@@ -284,9 +287,9 @@ describe('justified-layout', function() {
 
 	});
 
-	describe('containerPadding', function() {
+	describe('containerPadding', function () {
 
-		it('should add padding to the bottom of the container too', function() {
+		it('should add padding to the bottom of the container too', function () {
 
 			var geometry = justifiedLayout([1], {
 				containerPadding: 100
@@ -297,7 +300,7 @@ describe('justified-layout', function() {
 
 		});
 
-		it('should handle 0 padding', function() {
+		it('should handle 0 padding', function () {
 
 			var geometry = justifiedLayout([1, 1, 1], {
 				containerPadding: 0,

@@ -11,26 +11,26 @@
   ],
   "bugs": {
     "url": "https://github.com/flickr/justified-layout/issues",
-    "email": "whimpey@yahoo-inc.com"
+    "email": "flickr-open-source@yahoo-inc.com"
   },
   "main": "./lib/index.js",
   "scripts": {
+    "lint": "eslint ./src",
     "test": "./script/test.sh",
     "coverage": "./script/coverage.sh",
-    "build": "./script/build.sh",
-    "watch": "./script/watch.sh"
+    "build": "./script/build.sh"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:flickr/justified-layout.git"
   },
-  "author": "Jim Whimpey <whimpey@yahoo-inc.com>",
+  "author": "Flickr Open Source <flickr-open-source@yahoo-inc.com>",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.6.5",
-    "babel-preset-es2015": "^6.3.13",
     "browserify": "~11.1.0",
     "coveralls": "^2.11.9",
+    "eslint": "^2.13.1",
+    "eslint-config-flickr": "^1.1.7",
     "expect": "1.14.0",
     "istanbul": "^0.4.2",
     "mocha": "2.4.5",
