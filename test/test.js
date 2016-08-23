@@ -285,6 +285,69 @@ describe('justified-layout', function () {
 
 		});
 
+		it('should return widows with a left layout through the default', function () {
+
+			var geometry1LeftWidow = justifiedLayout([1, 1, 1, 1]);
+
+			expect(geometry1LeftWidow.boxes[0].left).toEqual(geometry1LeftWidow.boxes[3].left);
+
+		});
+
+		it('should return widows with a specified left layout', function () {
+
+			var geometry1LeftWidow = justifiedLayout([1, 1, 1, 1], {
+				widowLayoutStyle: 'left'
+			});
+
+			expect(geometry1LeftWidow.boxes[0].left).toEqual(geometry1LeftWidow.boxes[3].left);
+
+		});
+
+		it('should return widows with a centered layout', function () {
+
+			var containerWidth = 1060;
+			var boxSpacing = 10;
+			var geometry1CenteredWidow;
+
+			var n = 0;
+			var testCount = 2;
+			var totalBoxCount = 0;
+			var widowRowWidth = 0;
+			var centeredRowOffset = 0;
+			var leftOfFirstWidow = 0;
+			var testLayouts = [
+				[1, 1, 1, 1], // 1 widow
+				[1, 1, 1, 1, 1], // 2 widows
+				[1.6, 1, 2.3, 1.2, 0.1] // 1 widow
+			];
+
+			for(testCount = testLayouts.length; testCount > 0; testCount--) {
+				geometry1CenteredWidow = justifiedLayout(testLayouts[testCount - 1], {
+					containerWidth: containerWidth,
+					boxSpacing: boxSpacing,
+					widowLayoutStyle: 'center'
+				});
+
+				widowRowWidth = 0;
+				totalBoxCount = geometry1CenteredWidow.boxes.length;
+
+				// Determine width of widow row
+				for(n = totalBoxCount - 1; n >= totalBoxCount - geometry1CenteredWidow.widowCount; n--) {
+					widowRowWidth += geometry1CenteredWidow.boxes[n].width + boxSpacing;
+				}
+
+				// Account for right amount of spacing in there, one less than the number of widows
+				widowRowWidth -= boxSpacing;
+
+				// "Left" of the widowed row based on the width of the container and number of widows
+				centeredRowOffset = (containerWidth / 2) - (widowRowWidth / 2);
+				leftOfFirstWidow = geometry1CenteredWidow.boxes[geometry1CenteredWidow.boxes.length - geometry1CenteredWidow.widowCount].left;
+
+				expect(centeredRowOffset).toEqual(leftOfFirstWidow);
+			}
+
+		});
+
 	});
 
 	describe('containerPadding', function () {
