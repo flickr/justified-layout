@@ -8,6 +8,50 @@ var expect = require('expect');
 var fourSquares = require(__dirname + '/fixtures/four-squares');
 var fourSquares400 = require(__dirname + '/fixtures/four-squares-400');
 
+var testLayoutsForCenteredWidows = [
+	[1, 1, 1, 1], // 1 widow
+	[1, 1, 1, 1, 1], // 2 widows
+	[1.6, 1, 2.3, 1.2, 0.1] // 1 widow
+];
+
+// Used for testing centered widows
+function isThisWidowRowCentered(layout) {
+
+	var containerWidth = 1060;
+	var boxSpacing = 10;
+	var geometryCenteredWidows;
+
+	var n = 0;
+	var totalBoxCount = 0;
+	var widowRowWidth = 0;
+	var centeredRowOffset = 0;
+	var leftOfFirstWidow = 0;
+
+	geometryCenteredWidows = justifiedLayout(layout, {
+		containerWidth: containerWidth,
+		boxSpacing: boxSpacing,
+		widowLayoutStyle: 'center'
+	});
+
+	widowRowWidth = 0;
+	totalBoxCount = geometryCenteredWidows.boxes.length;
+
+	// Determine width of widow row
+	for (n = totalBoxCount - 1; n >= totalBoxCount - geometryCenteredWidows.widowCount; n--) {
+		widowRowWidth += geometryCenteredWidows.boxes[n].width + boxSpacing;
+	}
+
+	// Account for right amount of spacing in there, one less than the number of widows
+	widowRowWidth -= boxSpacing;
+
+	// "Left" of the widowed row based on the width of the container and number of widows
+	centeredRowOffset = (containerWidth / 2) - (widowRowWidth / 2);
+	leftOfFirstWidow = geometryCenteredWidows.boxes[geometryCenteredWidows.boxes.length - geometryCenteredWidows.widowCount].left;
+
+	return centeredRowOffset === leftOfFirstWidow;
+
+}
+
 describe('justified-layout', function () {
 
 	it('should create additional rows if it won\'t fit within constraints', function () {
@@ -282,6 +326,68 @@ describe('justified-layout', function () {
 
 			expect(geometry1Widow.widowCount).toEqual(1);
 			expect(geometry2Widow.widowCount).toEqual(2);
+
+		});
+
+		it('should return widows with a left layout through the default', function () {
+
+			var geometry1LeftWidow = justifiedLayout([1, 1, 1, 1]);
+
+			expect(geometry1LeftWidow.boxes[0].left).toEqual(geometry1LeftWidow.boxes[3].left);
+
+		});
+
+		it('should return widows with a specified left layout', function () {
+
+			var geometry1LeftWidow = justifiedLayout([1, 1, 1, 1], {
+				widowLayoutStyle: 'left'
+			});
+
+			expect(geometry1LeftWidow.boxes[0].left).toEqual(geometry1LeftWidow.boxes[3].left);
+
+		});
+
+		testLayoutsForCenteredWidows.forEach(function (layout) {
+
+			it('should return widows with a centered layout for [' + layout.toString() + ']', function () {
+				expect(isThisWidowRowCentered(layout));
+			});
+
+		}, this);
+
+		it('should return single widow with justified layout', function () {
+
+			var containerWidth = 880;
+			var boxSpacing = 10;
+			var geometryJustfiedWidows = justifiedLayout([1, 1, 1, 2.5], {
+				containerWidth: containerWidth,
+				boxSpacing: boxSpacing,
+				widowLayoutStyle: 'justify'
+			});
+
+			var widthOfFinalJustifiedItem = geometryJustfiedWidows.boxes[geometryJustfiedWidows.boxes.length - 1].width;
+
+			// Final item (one widow) should be the width of the container minus the padding on each side
+			expect(widthOfFinalJustifiedItem).toEqual(containerWidth - (boxSpacing * 2));
+
+		});
+
+		it('should return widows left aligned if a nonsense value is provided', function () {
+
+			var boxSpacing = 10;
+			var geometry = justifiedLayout([1, 1, 1, 1, 2, 1], {
+				widowLayoutStyle: 'porkchop sandwiches',
+				boxSpacing: boxSpacing
+			});
+
+			var firstWidow;
+
+			if (geometry.widowCount > 0) {
+				firstWidow = geometry.boxes[geometry.boxes.length - geometry.widowCount];
+
+				// The first widow's left should be the same as the first box in the entire layout
+				expect(firstWidow.left).toEqual(geometry.boxes[0].left);
+			}
 
 		});
 
