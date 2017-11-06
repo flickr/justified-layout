@@ -284,7 +284,6 @@ describe('justified-layout', function () {
 			});
 
 			expect(geometry.boxes[5].width).toEqual(1040);
-			expect(geometry.boxes[5].top).toEqual(713);
 			expect(geometry.boxes[6].top).toEqual(geometry.boxes[5].top + geometry.boxes[5].height + 10);
 
 		});
