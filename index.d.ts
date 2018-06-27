@@ -69,16 +69,18 @@ declare namespace justifiedLayout {
 		widowLayoutStyle?: "left" | "justify" | "center";
 	}
 
+	interface Box {
+		aspectRatio: number;
+		top: number;
+		width: number;
+		height: number;
+		left: number;
+	}
+
 	interface Output {
 		containerHeight: number;
 		widowCount: number;
-		boxes: {
-			aspectRatio: number;
-			top: number;
-			width: number;
-			height: number;
-			left: number;
-		}[];
+		boxes: Box[];
 	}
 }
 
