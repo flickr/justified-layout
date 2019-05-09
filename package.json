@@ -35,16 +35,16 @@
   "author": "Flickr Open Source <flickr-open-source@yahoo-inc.com>",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "~11.1.0",
-    "coveralls": "^2.11.9",
-    "eslint": "^2.13.1",
-    "eslint-config-flickr": "~1.1.8",
-    "expect": "1.14.0",
-    "istanbul": "^0.4.2",
-    "mocha": "2.4.5",
-    "uglify-js": "2.6.2"
+    "browserify": "~16.2.3",
+    "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-flickr": "~1.3.1",
+    "expect": "24.8.0",
+    "istanbul": "^0.4.5",
+    "mocha": "6.1.4",
+    "uglify-js": "3.5.11"
   },
   "dependencies": {
-    "merge": "1.2.0"
+    "merge": "1.2.1"
   }
 }

@@ -128,7 +128,7 @@ describe('justified-layout', function () {
 					{ width: 10 }
 				]);
 			} catch (e) {
-				expect(e.message, "Item 0 has an invalid aspect ratio");
+				expect(e.message).toBe("Item 0 has an invalid aspect ratio");
 			}
 
 		});
@@ -140,7 +140,7 @@ describe('justified-layout', function () {
 					{ height: 10 }
 				]);
 			} catch (e) {
-				expect(e.message, "Item 0 has an invalid aspect ratio");
+				expect(e.message).toBe("Item 0 has an invalid aspect ratio");
 			}
 
 		});
@@ -150,7 +150,7 @@ describe('justified-layout', function () {
 			try {
 				justifiedLayout(['NaN']);
 			} catch (e) {
-				expect(e.message, "Item 0 has an invalid aspect ratio");
+				expect(e.message).toBe("Item 0 has an invalid aspect ratio");
 			}
 
 		});
