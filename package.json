@@ -35,7 +35,7 @@
   "author": "Flickr Open Source <flickr-open-source@yahoo-inc.com>",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "~11.1.0",
+    "browserify": "~16.2.3",
     "coveralls": "^3.0.4",
     "eslint": "^2.13.1",
     "eslint-config-flickr": "~1.3.1",
