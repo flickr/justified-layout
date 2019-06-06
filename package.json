@@ -36,7 +36,7 @@
   "license": "ISC",
   "devDependencies": {
     "browserify": "~11.1.0",
-    "coveralls": "^2.11.9",
+    "coveralls": "^3.0.4",
     "eslint": "^2.13.1",
     "eslint-config-flickr": "~1.1.8",
     "expect": "1.14.0",
