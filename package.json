@@ -14,10 +14,6 @@
     "dist",
     "lib"
   ],
-  "bugs": {
-    "url": "https://github.com/flickr/justified-layout/issues",
-    "email": "flickr-open-source@yahoo-inc.com"
-  },
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint .",
@@ -32,7 +28,6 @@
     "type": "git",
     "url": "git@github.com:flickr/justified-layout.git"
   },
-  "author": "Flickr Open Source <flickr-open-source@yahoo-inc.com>",
   "license": "ISC",
   "devDependencies": {
     "browserify": "~11.1.0",
