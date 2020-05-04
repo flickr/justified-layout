@@ -17,11 +17,11 @@
   "main": "./lib/index.js",
   "scripts": {
     "lint": "eslint .",
-    "test": "istanbul test _mocha",
+    "test": "nyc mocha",
     "build": "npm run build-dist && npm run build-min",
     "build-dist": "mkdir -p dist && browserify -r $npm_package_main:justified-layout > dist/justified-layout.js",
     "build-min": "uglifyjs dist/justified-layout.js --comments -o dist/justified-layout.min.js",
-    "coverage": "cat ./coverage/lcov.info | coveralls",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepublish": "npm run build"
   },
   "repository": {
@@ -30,14 +30,14 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^16.2.3",
-    "coveralls": "^2.11.9",
-    "eslint": "^4.18.2",
+    "browserify": "^16.5.1",
+    "coveralls": "^3.1.0",
+    "eslint": "^6.8.0",
     "eslint-config-flickr": "^2.0.1",
     "expect": "1.14.0",
-    "istanbul": "^0.4.2",
-    "mocha": "^6.1.4",
-    "uglify-js": "2.6.2"
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.1",
+    "uglify-js": "^3.9.2"
   },
   "dependencies": {
     "merge": "1.2.1"
