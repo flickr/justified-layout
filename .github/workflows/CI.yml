@@ -69,6 +69,7 @@ jobs:
         run: |
           npm test
       - name: "Upload coverage results"
+        continue-on-error: true
         run: |
           npm run coverage
   lint:
