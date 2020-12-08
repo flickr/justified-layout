@@ -1,0 +1,100 @@
+name: "CI"
+on:
+  push:
+    branches: "*"
+  pull_request:
+jobs:
+  build:
+    name: "Build"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      - name: "Setup node"
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: "Cache NPM dependencies"
+        uses: actions/cache@v2
+        with:
+          path: "~/.npm"
+          key: npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+          restore-keys: |
+            npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-
+      - name: "Install NPM dependencies"
+        run: |
+          npm ci
+      - name: "Build"
+        run: |
+          npm run build
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v2
+        with:
+          name: "build-artifact"
+          path: dist
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      - name: "Setup node"
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: "Cache NPM dependencies"
+        uses: actions/cache@v2
+        with:
+          path: "~/.npm"
+          key: npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+          restore-keys: |
+            npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-
+      - name: "Install NPM dependencies"
+        run: |
+          npm ci
+      - name: "Download build artifact"
+        uses: actions/download-artifact@v2
+        with:
+          name: "build-artifact"
+          path: dist
+      - name: "Test"
+        run: |
+          npm test
+      - name: "Upload coverage results"
+        run: |
+          npm run coverage
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+      - name: "Setup node"
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: "Cache NPM dependencies"
+        uses: actions/cache@v2
+        with:
+          path: "~/.npm"
+          key: npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+          restore-keys: |
+            npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-
+      - name: "Install NPM dependencies"
+        run: |
+          npm ci
+      - name: "Lint"
+        run: |
+          npm run lint
