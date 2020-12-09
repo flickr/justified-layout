@@ -34,7 +34,7 @@ jobs:
       - name: "Upload artifact"
         uses: actions/upload-artifact@v2
         with:
-          name: "build-artifact"
+          name: "build-artifact-${{ matrix.node-version }}"
           path: dist
   test:
     name: "Test"
@@ -63,7 +63,7 @@ jobs:
       - name: "Download build artifact"
         uses: actions/download-artifact@v2
         with:
-          name: "build-artifact"
+          name: "build-artifact-${{ matrix.node-version }}"
           path: dist
       - name: "Test"
         run: |
