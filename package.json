@@ -30,7 +30,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^16.5.1",
+    "browserify": "^17.0.0",
     "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-flickr": "^2.0.1",
@@ -39,7 +39,5 @@
     "nyc": "^15.0.1",
     "uglify-js": "^3.9.2"
   },
-  "dependencies": {
-    "merge": "1.2.1"
-  }
+  "dependencies": {}
 }
