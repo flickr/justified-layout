@@ -39,7 +39,5 @@
     "nyc": "^15.0.1",
     "uglify-js": "^3.9.2"
   },
-  "dependencies": {
-    "merge": "1.2.1"
-  }
+  "dependencies": {}
 }
