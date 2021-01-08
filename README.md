@@ -25,14 +25,16 @@ Into this:
             "top": 10,
             "width": 170,
             "height": 340,
-            "left": 10
+            "left": 10,
+            "row": 0
         },
         {
             "aspectRatio": 1.5,
             "top": 10,
             "width": 510,
             "height": 340,
-            "left": 190
+            "left": 190,
+            "row": 0
         },
         ...
     ]

@@ -7,28 +7,32 @@
 			"top": 10,
 			"width": 380,
 			"height": 380,
-			"left": 10
+			"left": 10,
+			"row": 0
 		},
 		{
 			"aspectRatio": 1,
 			"height": 380,
 			"left": 10,
 			"top": 400,
-			"width": 380
+			"width": 380,
+			"row": 1
 		},
 		{
 			"aspectRatio": 1,
 			"height": 380,
 			"left": 10,
 			"top": 790,
-			"width": 380
+			"width": 380,
+			"row": 2
 		},
 		{
 			"aspectRatio": 1,
 			"top": 1180,
 			"width": 380,
 			"height": 380,
-			"left": 10
+			"left": 10,
+			"row": 3
 		}
 	]
 }
