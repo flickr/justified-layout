@@ -71,3 +71,6 @@ jspm_packages
 
 # Dist directory
 dist
+
+# Don't check in package-lock.json for libraries
+package-lock.json
