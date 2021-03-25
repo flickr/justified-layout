@@ -27,7 +27,7 @@ jobs:
             npm-dependencies-${{ runner.os }}-
       - name: "Install NPM dependencies"
         run: |
-          npm ci
+          npm install
       - name: "Build"
         run: |
           npm run build
@@ -96,7 +96,7 @@ jobs:
             npm-dependencies-${{ runner.os }}-
       - name: "Install NPM dependencies"
         run: |
-          npm ci
+          npm install
       - name: "Lint"
         run: |
           npm run lint
