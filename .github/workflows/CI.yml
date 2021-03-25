@@ -60,7 +60,7 @@ jobs:
             npm-dependencies-${{ runner.os }}-
       - name: "Install NPM dependencies"
         run: |
-          npm ci
+          npm install
       - name: "Download build artifact"
         uses: actions/download-artifact@v2
         with:
