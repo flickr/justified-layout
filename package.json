@@ -12,9 +12,11 @@
   "files": [
     "demo.html",
     "dist",
-    "lib"
+    "lib",
+    "types"
   ],
   "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
   "scripts": {
     "lint": "eslint .",
     "test": "nyc mocha",
