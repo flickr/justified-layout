@@ -21,10 +21,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.npm"
-          key: npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+          key: npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package.json') }}
           restore-keys: |
-            npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
-            npm-dependencies-${{ runner.os }}-
+            npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-
       - name: "Install NPM dependencies"
         run: |
           npm install
@@ -54,10 +54,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.npm"
-          key: npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+          key: npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package.json') }}
           restore-keys: |
-            npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
-            npm-dependencies-${{ runner.os }}-
+            npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-
       - name: "Install NPM dependencies"
         run: |
           npm install
@@ -90,10 +90,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.npm"
-          key: npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
+          key: npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package.json') }}
           restore-keys: |
-            npm-dependencies-${{ runner.os }}-${{ hashFiles('package.json') }}
-            npm-dependencies-${{ runner.os }}-
+            npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package.json') }}
+            npm-dependencies-${{ runner.os }}-${{ matrix.node-version }}-
       - name: "Install NPM dependencies"
         run: |
           npm install
